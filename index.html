@@ -220,6 +220,23 @@ th.col-pulse{color:var(--green)}
 .foot-meta{margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:0.02em;color:var(--ink-faint)}
 @media(max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}.checklist{columns:1}.inv-item{grid-template-columns:auto 1fr}.inv-item .inv-size{grid-column:2;text-align:left}}
 @media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}.phase{flex-direction:column;gap:10px}.masthead{padding:44px 0 36px}.wrap{padding:0 18px}.code{font-size:11.5px}}
+/* --- Metric status review (post-revision) --- */
+.status{margin-top:16px;border-top:1px dashed var(--border-strong);padding-top:14px}
+.status-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.status-lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-faint)}
+.verdict{font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;padding:3px 10px;border-radius:5px;display:inline-flex;align-items:center;gap:6px}
+.verdict::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.v-green{background:var(--green-soft);color:var(--green)} .v-amber{background:var(--gold-soft);color:var(--gold)} .v-red{background:var(--red-soft);color:var(--red)}
+.verdict-note{font-size:12.5px;color:var(--ink-soft);font-style:italic;line-height:1.55;margin:0 0 12px}
+.fixgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.fixgrid{grid-template-columns:1fr}}
+.fixcol h6{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;margin:0 0 7px;color:var(--ink-faint)}
+.fixcol.fixed h6{color:var(--green)} .fixcol.todo h6{color:var(--gold)}
+.fixcol ul{list-style:none;margin:0;padding:0}
+.fixcol li{font-size:12.5px;line-height:1.55;color:var(--ink-soft);padding-left:16px;position:relative;margin-bottom:7px}
+.fixcol.fixed li::before{content:"\2713";position:absolute;left:0;color:var(--green);font-weight:600}
+.fixcol.todo li::before{content:"\203A";position:absolute;left:0;color:var(--gold);font-weight:700}
+.disc{font-size:12.5px;line-height:1.55;color:var(--ink-soft);margin:0 0 12px;padding-left:14px;border-left:2px solid var(--border-strong)}
 </style>
 </head>
 <body>
@@ -228,7 +245,7 @@ th.col-pulse{color:var(--green)}
     <div class="kicker">Pre-Build Product Research &amp; Specification</div>
     <h1>Pulse<span class="dot">.</span></h1>
     <p class="subtitle">A complete body of work — problem definition through database schema, metric derivations, a fully worked numerical case study, and competitive map — written before a single line of production code.</p>
-    <div class="byline"><span><strong>Tushar Mathur</strong> &middot; UBC Economics, Statistics. </span><span>&middot;</span><span>2026</span></div>
+    <div class="byline"><span><strong>Tushar Mathur</strong> &middot; UBC Economics, Statistics minor</span><span>&middot;</span><span>2026</span></div>
     <div class="scope">9 documents &middot; months of research and customer discovery &middot; ~200 pages of specification — from problem definition to a 14-table PostgreSQL schema, a six-phase pipeline, 15 derived metric formulas, and a four-client worked example with verified arithmetic — written before a single line of production code.</div>
     <div class="pills"><span class="pill">Vancouver, BC</span><span class="pill">Canadian fintech</span><span class="pill">Pre-code phase</span></div>
   </div>
@@ -951,6 +968,10 @@ th.col-pulse{color:var(--green)}
   <div class="section">
     <div class="kicker">Per-Metric Derivations</div>
     <h3 class="section-title">Fifteen formulas, <em>each traced to its discipline</em></h3>
+    <div class="callout">
+      <span class="ck">Post-revision status review</span>
+      Each metric below now carries a status review conducted after a full revision pass: the discrepancies found, how they were fixed, an accuracy verdict, and what still needs work. Read the verdict colours as — <strong style="color:var(--green)">green</strong>: confident now (often after one small fix); <strong style="color:var(--gold)">amber</strong>: improved and usable, but real-data tuning still needed; <strong style="color:var(--red)">red</strong>: set aside for now, with accuracy inherited from a foundation metric or from data not yet held. A theme runs through all of it: the arithmetic was almost always already correct — what changed was how uncertainty is reported, how thresholds behave on small samples, and a few unit/eligibility errors pushed back toward the safe direction.
+    </div>
 
     <div class="acc open"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-01</strong> &middot; Projected Cash Gap &mdash; <span class="conf conf-high">HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
       <p><strong>Discipline:</strong> Cash flow forecasting / discrete-time financial modelling. <strong>Source:</strong> corporate treasury management; the discrete daily loop parallels Basel III LCR's 30-day forward projection.</p>
@@ -964,6 +985,15 @@ payroll_debit = net_pay + employer_taxes;  employer_taxes = gross &times; (0.059
 cash_threshold = max(3000, 0.50 &times; avg_weekly_fixed_costs)
 gap_date = min(day where balance[day] &lt; cash_threshold)</div>
       <p>A first-order linear recurrence: each day's balance depends only on the prior day plus net cash flows. The only observed number is the starting balance — every other number is derived. <strong>Confidence HIGH:</strong> the formula is exact arithmetic; uncertainty lives in the inputs, handled with explicit confidence intervals.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-amber">Model · exact engine, estimated inputs</span></div>
+        <p class="verdict-note">Arithmetic is exact and trustworthy; the output is now honest about its own uncertainty. Highly accurate inside 7–14 days, but capped by the seasonal model (M-10) beyond 30 days. Confident in the mechanism, cautiously confident near-term, explicitly uncertain long-horizon — the correct posture.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the loop produced a single point estimate dressed as certain while every input is itself an estimate; irregular real outflows (annual insurance, quarterly tax, one-off equipment) were silently missing; the "confidence intervals" the text referenced were never actually built.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Kept the exact daily recurrence but run it 1,000 times with inputs varied (revenue ±15%, payment timing from the client delay model, cost noise ±10%).</li><li>Output changed from one number to a probability and a band: "X% chance of breaching the floor between day A and B," with a 10th–90th percentile range on the gap.</li><li>Added an unmodelled-outflow scan over 12+ months of history that lists what the forecast is NOT capturing instead of dropping it.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>Band width is only as good as the assumed input distributions; the ±15% and delay model need calibration against real businesses.</li><li>The unmodelled-outflow scan needs a real "irregular and large" detection rule tuned on actual histories.</li><li>Cannot be more reliable than M-10, so it is gated on M-10 improving.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-02</strong> &middot; Payroll Coverage Ratio &mdash; <span class="conf conf-high">VERY HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -974,6 +1004,15 @@ employer_taxes = gross &times; 0.0595 (CPP)  +  gross &times; 0.0166 (EI)  =  gr
 payroll_coverage = balance[payroll_check_date] / payroll_cash_out
 warn &lt; 1.20    critical &lt; 1.00</div>
       <p>Both net pay and employer taxes leave the account on the same day, so the obligation is net + employer taxes, not gross. The 1.20 warning buffer is calibrated to forecast uncertainty; the 1.00 critical line is exact arithmetic. <strong>Source:</strong> CRA 2026 CPP/EI contribution rates.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-amber">Model · inherits M-01</span></div>
+        <p class="verdict-note">Among the most reliable formulas in the system (confirmed payroll data, simple division). Accuracy tracks M-01's forecast in the numerator: very accurate within a week, as uncertain as the forecast further out. The lower-bound comparison makes it appropriately conservative — the right direction for a survival metric.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the numerator is the M-01 forecast, so it carried all of M-01's uncertainty while being compared against fixed threshold lines as if certain; variable pay (tips, commissions) was estimated with a flat 8-week average, understating the obligation in a quiet month before a busy payroll.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>We now compare the LOWER bound of the projected balance (10th percentile from M-01's simulation) against 1.0, so a genuinely at-risk payroll stops hiding behind a comfortable point estimate.</li><li>Variable pay is now estimated with a seasonally-weighted figure instead of a flat 8-week mean.</li><li>The number carries a confidence tier based on days-to-run: tight inside 7 days, widened beyond 30.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The seasonal weighting for tips/commissions needs real variable-pay data to calibrate.</li><li>Like its dependence on M-01, long-horizon reliability is gated on the forecast improving.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-03</strong> &middot; GST/HST Tax Reserve Gap &mdash; <span class="conf conf-med">MEDIUM-HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -985,6 +1024,15 @@ est_gst_owing_net = est_gst_owing &minus; est_ITCs
 weekly_reserve_needed = (est_gst_owing_net &minus; gst_reserved) / weeks_remaining
 alert when weeks_remaining &lt; 8 AND gap &gt; $500</div>
       <p>ITCs are GST paid on business inputs, claimable against the remittance. <strong>Confidence MEDIUM-HIGH:</strong> gross owing is exact given accurate revenue; the ITC estimate carries uncertainty, treated conservatively (slightly overstated) — the right direction for a reserve.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-green">Simple arithmetic · categorisation risk</span></div>
+        <p class="verdict-note">The core math is simple and now points in the safe direction. Before the fix it under-reserved — the exact harm the feature exists to prevent; after, it errs toward over-reserving, which is correct for a tax-reserve tool. Confidence MEDIUM-HIGH, with the residual error in the safe direction.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> ITCs were estimated by applying the full GST rate to every categorised expense, which over-counts — wages, most insurance, interest and exempt/zero-rated purchases carry no recoverable GST, and meals are only 50% recoverable; a single flat provincial rate was applied even for businesses selling across provinces.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Replaced the blanket rate with a per-category eligibility factor: full credit on standard taxable inputs, half on meals/entertainment, zero on wages/insurance/interest/exempt items.</li><li>For multi-province sellers the rate is now keyed to place of supply, not the home province.</li><li>LLM-categorised (lower-confidence) expenses default to zero eligibility until confirmed — biasing the reserve toward reserving more.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>Eligibility factors are a reasonable default but the real recoverable fraction varies by business; validate against actual filed returns where available.</li><li>The 30% LLM-fallback share directly affects the ITC estimate, so it is coupled to categorisation accuracy improving.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-04</strong> &middot; Gross Margin % &mdash; <span class="conf conf-high">HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -993,6 +1041,15 @@ alert when weeks_remaining &lt; 8 AND gap &gt; $500</div>
 z_margin = (gm_this_week &minus; rolling_12wk_mean) / rolling_12wk_stdev
 alert when z_margin &lt; &minus;2.0   (negative direction only)</div>
       <p>The percentage form normalises for business size. Only a fall below the lower control limit alerts — rising margin is not a problem. <strong>Confidence HIGH:</strong> exact arithmetic on P&amp;L data; gross margin over 12 weeks approximates normality well enough for the 2σ threshold.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-green">High for the level · good for the alert</span></div>
+        <p class="verdict-note">The margin percentage itself is exact and reliable. The alert layer is now substantially better behaved — the sigma floor removes the most common false-alarm cause. Confident in the reported margin, reasonably confident in the alert pending real-data confirmation of the false-positive rate.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> margin is bounded and, for a stable business, sits in a very tight band, so a tiny standard deviation made the alert band absurdly narrow and tripped on ordinary moves; COGS posts on a lag and in lumps, so weekly margin swung on bookkeeping timing rather than real performance.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Floored the standard deviation at a metric-specific minimum (about 1 percentage point) so a steady business is not punished for being steady.</li><li>When COGS posting is stale or lumpy this week, we smooth to a trailing 4-week margin and suppress the raw-week z-alert.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The sigma-floor value and the COGS-staleness trigger need tuning on real P&amp;L feeds.</li><li>Like all z-metrics, its true false-positive rate can only be measured against real businesses in shadow mode.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-05</strong> &middot; Food Cost % &mdash; <span class="conf conf-high">HIGH / MED</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1002,6 +1059,15 @@ food_cost_pct + food_gross_margin_pct = 100%
 z_food = (fc_this_week &minus; rolling_12wk_mean) / rolling_12wk_stdev
 alert when z_food &gt; +2.0  OR  food_cost_pct &gt; 40% (absolute danger zone)</div>
       <p>POS data preferred over accounting for a 48-hour timing advantage. Positive-direction alert (high cost is bad). <strong>Confidence HIGH for z-score, MEDIUM for the 40% ceiling</strong> — fine-dining concepts may legitimately run higher, so the z-score is the more reliable per-business signal.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-green">High for the level &amp; the moderate alert</span></div>
+        <p class="verdict-note">The cleanest metric in the system. The level is exact, and the alert is now honest about the difference between a believable cost rise and a likely data glitch. Confident here — the remaining uncertainty is operational (period-matching of deliveries), not mathematical.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the framework treated a very large z-score as very high confidence, but a z that large is near-impossible under the model's own assumption — it indicates a data error (double-counted invoice, POS remap, bulk stock-up), not an overnight cost blowout; food received one week and sold the next mismatched the cost and revenue periods.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Cap the z used for confidence and re-route anything beyond about 4σ to a "verify this data" path rather than asserting a cost crisis.</li><li>Believable cost rises (z 2–4) still alert normally; the "spike with no matching supplier invoice = waste/theft" flag is retained, and a spike WITH an outsized invoice is now treated as a possible bulk-buy timing issue.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The 4σ "verify data" cutoff is a sensible default but should be confirmed against real restaurant data.</li><li>Period-matching of deliveries to sales weeks is an ingestion concern at the data layer, not a formula concern.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-06</strong> &middot; Labour Cost % &mdash; <span class="conf conf-high">HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1011,6 +1077,15 @@ alert when z_food &gt; +2.0  OR  food_cost_pct &gt; 40% (absolute danger zone)</
 z_labor = (lp_this_week &minus; rolling_12wk_mean) / rolling_12wk_stdev
 Compound signal (escalated): z_labor &gt; +1.5  AND  revenue_z &lt; &minus;1.0</div>
       <p>Accrual basis is essential — biweekly cash payroll produces two pays in some months and zero in others; accrual labour is constant week to week. The compound signal catches the worst case (costs rising while revenue falls) even when neither crosses 2.0 alone. <strong>Confidence HIGH.</strong></p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-amber">Good · improved</span></div>
+        <p class="verdict-note">When hours data is present, the metric is accurate. The fallback is now free of the calendar saw-tooth, so the no-hours case is materially better. The compound signal's two-week persistence rule collapses its false-positive rate. Reasonably confident, pending real-data tuning.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> when hours data is missing, the fallback divided monthly payroll by weeks-in-month — reintroducing the exact biweekly distortion it set out to remove (a three-payday month looked ~50% heavier); the compound signal multiplied two noisy 12-week estimates and could fire on a one-week coincidence.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>When hours are unavailable we now annualise payroll and divide evenly (annual ÷ 52), removing the pay-calendar artefact.</li><li>The compound escalation now requires the condition to hold for two consecutive weeks before being raised to high priority.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The no-hours fallback still depends on payroll granularity; businesses giving only lump-sum runs remain the weakest case.</li><li>The two-week persistence window is a judgment call to confirm against real labour data.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-07</strong> &middot; Days Sales Outstanding (DSO) &mdash; <span class="conf conf-high">HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1021,6 +1096,15 @@ Cost of DSO = AR_Balance &times; (annual_cost_of_capital / 365) &times; extra_da
 z_DSO = (DSO_this_week &minus; rolling_12wk_mean) / rolling_12wk_stdev;  alert &gt; +2.0
   or absolute ceiling (agency 45 days, contractor 70 days)</div>
       <p>The 90-day revenue window smooths seasonal swings. The cost-of-DSO converts "getting paid slower" into a dollar opportunity cost that appears nowhere in the financial statements. <strong>Confidence HIGH.</strong></p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-green">High · improved</span></div>
+        <p class="verdict-note">The averaging fix removes the dominant false-spike cause; in testing, a single fresh invoice that pushed snapshot DSO to ~104 days settled to a true ~50 with averaged AR. The terms-aware ceiling stops nagging businesses operating exactly as contracted. Confident in this metric now.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the numerator used a single-day AR snapshot, so issuing one large invoice the day before the weekly run spiked DSO even though collection speed hadn't changed; the absolute ceilings (contractor 70, agency 45) collided with legitimate net-60 contract terms.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Switched the numerator to an average AR over the last four weeks, so one freshly-issued invoice can no longer whipsaw the figure.</li><li>The ceiling is now a function of the business's own stated payment terms (terms plus a buffer) rather than a flat vertical constant.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The four-week averaging window is a reasonable default but worth confirming for very lumpy B2B billers.</li><li>Capturing each business's stated payment terms at setup is now a data-collection requirement for the ceiling to work.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-08</strong> &middot; Per-Client Payment Delay &mdash; <span class="conf conf-med">MEDIUM-HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1031,6 +1115,15 @@ days_overdue = max(0, today &minus; due_date)
 client_z = (days_overdue &minus; client_avg_delay) / max(client_stdev, 1)
 alert when client_z &gt; 2.5  (minimum 3 paid invoices)</div>
       <p>Per-client baselines catch the slow creep no aggregate sees. The 2.5 threshold (vs 2.0) compensates for the noisier small-sample standard deviation; the max(stdev,1) floor prevents division by zero for always-on-time clients. <strong>Confidence MEDIUM-HIGH</strong>, improving past 10 invoices per client.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-amber">Medium-high · improved</span></div>
+        <p class="verdict-note">The statistical approach is sound and the two changes remove the main false-alarm modes. In testing, a reliable 3-day payer who hit one benign 7-day delay no longer alerts, while a genuine 14-day slip still does. Confidence improves with client history and is now appropriately gated on having enough of it.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the max(stdev, 1) floor, while preventing divide-by-zero, manufactured enormous z-scores for very consistent payers the first time they were a little late for a benign reason; the minimum of only three paid invoices made the standard deviation barely meaningful.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Added a practical-significance gate: alert only if z &gt; 2.5 AND the client is at least 10 days past their own norm, so a tiny harmless delay can no longer look like a crisis.</li><li>Raised the activation minimum from three to six paid invoices; below that the client shows a "limited history" monitor state rather than a confident score.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The 10-day practical floor may want to vary by vertical (a net-15 agency vs a net-60 contractor).</li><li>Clients with thin history are correctly held back, but coverage is partial until histories build.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-09</strong> &middot; Vendor Spend Anomaly &mdash; <span class="conf conf-high">HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1040,6 +1133,15 @@ vendor_z = (this_week_charge &minus; rolling_12wk_mean) / rolling_12wk_stdev
 alert when vendor_z &gt; +2.0  (positive direction only)
 SaaS case: if stdev &lt; 0.01 &times; mean, use stdev = 1  (flat-fee vendors)</div>
       <p>Each vendor gets its own control chart — a high-variability produce supplier needs a larger deviation to fire; a flat SaaS subscription fires on any change. <strong>Confidence HIGH:</strong> a 100-year-old, well-validated method, correctly scoped per vendor.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-amber">Good math · not yet ready to alert owners</span></div>
+        <p class="verdict-note">The per-vendor math is sound and the alert-budget control is the right fix. But this is the metric most exposed to false alarms, so we treat it as ready to MEASURE (shadow mode) but not yet ready to SEND alerts to owners until the budget control is validated on real vendor sets.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> it ran one independent test per vendor every week, so a business with dozens of vendors had a high chance SOME vendor false-alarmed each week (~60% at 40 vendors) — the single biggest contributor to alert fatigue; usage-based vendors (cloud, usage SaaS) legitimately scale with the business but were tested against a flat mean.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Replaced independent per-vendor testing with a portfolio-level false-discovery control (rank all vendors, surface only the genuinely unusual few) plus a hard cap on vendor alerts per run.</li><li>Tighten the cutoff as simultaneous tests grow (~2.45σ at 7 vendors, 2.81 at 20, 3.02 at 40) to hold a 5% weekly family-wise rate.</li><li>Usage-based vendors are now scored on charge-to-revenue ratio rather than raw charge.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The alert-budget parameters (cap size, FDR rate) must be tuned on real businesses — the highest-priority shadow-mode candidate.</li><li>Tagging usage-based vendors at setup is a new data requirement.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-10</strong> &middot; Weekly Revenue Trend &mdash; <span class="conf conf-med">MEDIUM</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1050,6 +1152,15 @@ seasonal_expected = annual_weekly_avg &times; seasonal_index[current_week]
 revenue_z = (this_week &minus; seasonal_expected) / stdev_for_week[w]
 alert when revenue_z &lt; &minus;2.0</div>
       <p>Prevents the predictable February slump from firing while still catching a genuine non-seasonal decline. <strong>Confidence MEDIUM:</strong> the most statistically complex calculation — with only ~2 observations per week-of-year from 24 months, indices are imprecise, improving with more years. Disabled under 12 months of history.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-red">Improved but still weakest — keep working</span></div>
+        <p class="verdict-note">The pooling fix is a large improvement: in testing, per-week estimates from two points ranged from 10 to 1317 against a true value of 500, while the pooled estimate landed at 516 — usable rather than random. But it remains the most data-hungry metric and the one whose accuracy most improves with more history. Honestly MEDIUM, and flagged as the foundation to keep perfecting.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the per-week residual standard deviation was estimated from only ~2 observations per week-of-year — you cannot estimate a standard deviation from two points, so the denominator was effectively random; this is the weakest math in the system AND it feeds the survival metrics (M-01, M-11, M-12), so its noise propagated into metrics labelled high confidence.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Stopped estimating a separate standard deviation per week; we pool the residual variance across all weeks into one stable denominator.</li><li>Smooth the 52-week seasonal curve (monthly index interpolated, or a low-order seasonal fit) so two noisy yearly points don't define 52 free parameters.</li><li>Until 3+ years of history exist, we widen the band and explicitly label any revenue-derived cash forecast as lower-confidence.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>It genuinely needs more historical data — accuracy rises materially as businesses accumulate a third and fourth year.</li><li>Because M-01, M-11 and M-12 sit on top of it, it is the single highest-leverage metric to keep improving; the others are gated on it.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-11</strong> &middot; Hire Affordability Model &mdash; <span class="conf conf-high">HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1060,6 +1171,15 @@ modified_forecast[d] = baseline_forecast[d] &minus; daily_hire_cost
 min_balance &gt; $10,000 SAFE | $3k–10k MARGINAL | $0–3k RISKY | &le;0 UNAFFORDABLE
 Then: find earliest start_date where min_balance &gt; $10,000</div>
       <p>Fully loads the role with explicit Canadian employer taxes, re-runs the 90-day model, and finds the earliest safe start date if not immediately affordable. <strong>Confidence HIGH:</strong> rates are published and exact; output uncertainty equals the M-01 baseline's.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-red">Dependent — park until M-01/M-10 are solid</span></div>
+        <p class="verdict-note">There is no independent math to be confident in here; it is a wrapper around M-01 plus owner inputs. The revisions make it more realistic, but its accuracy is entirely inherited from the forecast. Recommended to set aside operationally until M-01 and M-10 are solid, at which point it becomes accurate for free.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> it modelled the hire as a clean daily salary cost only — no onboarding ramp, no one-time setup cost, and no revenue the hire is meant to generate (so every hire looked like pure cost); it rests entirely on the M-01 forecast, so a "Safe" verdict was only as good as a seasonal revenue estimate three months out.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Added the real cash shape of a hire: one-time setup cost, a productivity ramp, and an optional revenue contribution starting in month 2–3.</li><li>The verdict is now reported against M-01's simulation band ("safe in ~80% of scenarios; tight if Q4 underperforms") rather than a single binary label.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The ramp and revenue-contribution assumptions are owner-supplied and need sensible defaults.</li><li>It should not be a priority build right now; perfecting M-01 perfects it.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-12</strong> &middot; Project / Contract Float &mdash; <span class="conf conf-med">MEDIUM-HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1070,6 +1190,15 @@ min_float_balance = min(project_forecast[d] for d in float_period)
 &gt; $15,000 safe | &lt; $15,000 recommend credit draw | &lt; 0 cannot self-fund
 recommended_draw = max(0, 15,000 &minus; min_float_balance)</div>
       <p>Tracks the running float between project spend and client payment, applying the per-client delay model to the inflows. <strong>Confidence MEDIUM-HIGH:</strong> exact given the cost schedule; uncertainty comes from owner-entered milestone accuracy.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-red">Dependent — park until M-01 is solid</span></div>
+        <p class="verdict-note">Like the hire model, it is a wrapper around M-01 plus owner-entered schedules. The revisions fix the dangerous shortcuts (ignored fixed costs, optimistic payment), and the error now points the safe way. But it has no independent math to be separately confident in, so it is set aside until M-01 is solid.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> for a first project with a new client it assumed on-time payment — optimistic exactly where the stakes are highest; when the float was collapsed to a simple upfront-cost-minus-balance subtraction, it ignored ordinary payroll and rent accruing during the float, so the real low point was deeper and the recommended draw too small.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>We always run the full daily loop across the float window now, including the baseline fixed costs that accrue during it.</li><li>For unknown clients we apply the vertical's average lateness instead of assuming on-time payment, and size the recommended draw to a "client pays 30 days late" stress case.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The unknown-client lateness prior needs vertical-specific defaults.</li><li>Multi-milestone / progress-billing projects are a known harder case to detail later.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-13</strong> &middot; Runway (Founder Mode) &mdash; <span class="conf conf-high">HIGH / MED</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1080,6 +1209,15 @@ runway_months = current_cash / net_burn
 raise_deadline = today + (runway_months &minus; 6) months
 alert: runway &lt; 6 "start your raise now"  ·  &lt; 3 "critical"</div>
       <p>Negative net burn (profitable) yields an "infinite runway" status. The 6-month buffer reflects that fundraising takes 3–6 months. <strong>Confidence HIGH for burn</strong> (actual integrated data), <strong>MEDIUM for revenue</strong> estimate where streams are mixed.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-green">High — once the fix is in</span></div>
+        <p class="verdict-note">With the normalization fix, this is one of the most testable and demonstrable metrics in the system: a live number compared against a real bank balance over time. Without the fix it was confidently wrong by ~1.8×. The clearest "fix-then-fully-confident" case — the fix is small and the metric becomes a flagship.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the single most consequential arithmetic risk in the whole model — if a payroll feed arrives on a non-monthly cycle (biweekly, weekly) and is plugged into a monthly burn total without conversion, burn is understated and runway overstated; a biweekly figure read as monthly overstates runway by roughly 1.8×. This is the headline number founders quote to investors, so the error was maximally visible.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Normalise EVERY payroll feed to a monthly figure at ingestion with an explicit, tested conversion (biweekly ×26/12, weekly ×52/12, semimonthly ×2), asserting the unit so a non-monthly value can never reach a monthly total unconverted.</li><li>Added a cross-check: if M-13's runway and M-01's cash-gap date disagree (8 months vs a breach in 10 weeks), the contradiction is flagged.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The fix is a hard precondition for testing — validating an unconverted runway would mean validating a number wrong by ~1.8× without knowing it.</li><li>Net burn for mixed-revenue businesses (consulting + product) still relies on revenue categorisation quality.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-14</strong> &middot; Break-Even Revenue &mdash; <span class="conf conf-high">HIGH</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1091,6 +1229,15 @@ Revenue = Fixed_Costs / (1 &minus; variable_cost_ratio)
 e.g. fixed $14,400/wk, variable ratio 0.34:
 break_even = 14,400 / 0.66 = $21,818/week</div>
       <p>Fixed costs identified by recurrence detection; variable ratio from trailing 3-month COGS/revenue. <strong>Confidence HIGH:</strong> the CVP formula is exact and universal; uncertainty is only in separating fixed from variable costs.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-green">High for the formula · good for the inputs</span></div>
+        <p class="verdict-note">The CVP formula is exact and universally accepted. The remaining uncertainty is entirely in the cost-classification step, which the range now communicates honestly rather than hiding behind false precision. Confident in the math; the range is the honest expression of the input uncertainty.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the weak point was the fixed-vs-variable split — hourly labour is variable but, when paid through the same payroll debit as salaried staff, was tagged as fixed, distorting the ratio and often understating break-even (the dangerous direction: owner thinks they're safe when not); step-fixed costs (fixed until you add a shift or location) were treated as smoothly linear, misleading exactly at expansion-decision volumes.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Split payroll into fixed (salaried) and variable (hourly) using hours/rate data where available, estimating the variable share from the vertical otherwise.</li><li>Report break-even as a range reflecting the classification uncertainty, and warn when the business is near a known step-cost boundary.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>The variable-labour estimate when hours are missing needs vertical defaults.</li><li>Step-cost boundary detection is a nice-to-have that needs real cost-structure data to do well.</li></ul></div>
+        </div>
+      </div>
     </div></div>
 
     <div class="acc"><div class="acc-head" onclick="toggleAcc(this)"><span><strong>M-15</strong> &middot; Expansion Readiness Score &mdash; <span class="conf conf-med">MEDIUM</span></span><span class="arrow">&rsaquo;</span></div><div class="acc-body">
@@ -1101,7 +1248,17 @@ expansion_score = dso&times;0.20 + margin&times;0.20 + coverage&times;0.20
 Bands: 80–100 ready | 60–79 nearly | 40–59 needs work | &lt;40 stabilise first
 For each component &lt; 70 → generate a specific fix</div>
       <p>A weighted linear composite — the simplest, most interpretable composite-index method — with DSO, margin, coverage, and runway weighted equally as the primary credit/investment screening criteria. <strong>Confidence MEDIUM:</strong> weights are a designed prior, not statistically fitted; they can later be tuned via logistic regression against loan-approval outcomes.</p>
+      <div class="status">
+        <div class="status-top"><span class="status-lbl">Post-revision status</span><span class="verdict v-red">Lowest — finish last, by design</span></div>
+        <p class="verdict-note">Honestly MEDIUM and, because it sits on top of every other metric, it can be no more reliable than its inputs. The revisions make it honest (band not decimal, confidence-weighted, labelled indicative). It is the last thing to finish, not the first — it cannot be properly validated until there is real outcome data to fit against.</p>
+        <p class="disc"><strong>Discrepancies found:</strong> the weights were asserted from a view of what banks emphasise, not fitted to any outcome, yet the score was reported to two decimals — false precision on what is essentially an informed opinion; it aggregates the other metrics, so every upstream error (the runway unit bug, the seasonal noise) was baked in, and confidence was not propagated.</p>
+        <div class="fixgrid">
+          <div class="fixcol fixed"><h6>How we fixed it</h6><ul><li>Stopped reporting a false-precise decimal; now show a band plus the component bars.</li><li>Down-weight components whose inputs are low-confidence (runway from a messy revenue base, seasonal-dependent metrics).</li><li>Labelled it "indicative, not predictive" until real outcome data (actual loan approvals/declines) lets us fit the weights with a regression.</li></ul></div>
+          <div class="fixcol todo"><h6>Still needs attention</h6><ul><li>Blocked on real outcome data for weight-fitting; until then it stays indicative.</li><li>It inherits every upstream metric's accuracy, so its improvement is a downstream consequence of perfecting the others, not a separate workstream.</li></ul></div>
+        </div>
+      </div>
     </div></div>
+
   </div>
   <div class="section">
     <div class="kicker">Summary of Disciplines</div>
@@ -1123,6 +1280,35 @@ For each component &lt; 70 → generate a specific fix</div>
       </tbody>
     </table></div>
     <p style="margin-top:14px;font-style:italic;font-family:var(--serif);font-size:17px;color:var(--ink)">Every formula is grounded in established theory. None of it was invented for Pulse. We applied existing, well-validated methods to a new context.</p>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Cross-Cutting Fixes</div>
+    <h3 class="section-title">Two fixes that <em>span every z-score metric</em></h3>
+    <div class="grid g2">
+      <div class="card">
+        <div class="role-lbl" style="color:var(--gold)">Fix 01 · alert-budget control</div>
+        <h4>False-discovery, not independent tests</h4>
+        <p>Instead of testing every metric and vendor independently at a fixed cutoff — which makes some alarm trip almost every week — we cap and rank alerts so only the genuinely unusual few reach the owner, with a stricter cutoff as more things are watched at once. This is the main defence against alert fatigue and the reason several metrics are "ready to measure" before they are "ready to send."</p>
+      </div>
+      <div class="card">
+        <div class="role-lbl" style="color:var(--red)">Fix 02 · extremes are data-quality flags</div>
+        <h4>Verify the data before declaring a crisis</h4>
+        <p>Extreme readings are now treated as data-quality flags first, financial signals second. Beyond about four standard deviations, a reading is more likely a categorisation error or double-count than a true event, so we route it to "verify this data" rather than asserting a cost crisis or collapse.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Overall Posture</div>
+    <h3 class="section-title">The formulas were strong; <em>the revisions made the numbers honest</em></h3>
+    <p class="lead">Across almost every metric, the arithmetic was already correct. What changed was rarely the core formula and almost always one of three things — how uncertainty is reported (point estimate to band), how thresholds behave on small or skewed samples (sigma floors, t-cutoffs, practical-significance gates), or a unit/eligibility error pushed back toward the safe direction (runway normalization, GST eligibility).</p>
+    <div class="callout">
+      <span class="ck">The dependency structure is the thing to hold in mind</span>
+      M-10 (seasonal) feeds M-01, which feeds M-02, M-11 and M-12; and M-15 aggregates almost everything. So effort spent perfecting M-11, M-12 or M-15 right now is largely wasted — they improve automatically when their foundations do. The highest-leverage work is M-10 and M-01.
+    </div>
+    <p>The residual errors that remain are, by design, pointed in the safe direction: GST over-reserves rather than under-reserves, payroll coverage tests the worst-realistic balance, project float assumes lateness, break-even communicates a range. A tool that errs toward caution is the correct posture for small-business survival decisions.</p>
+    <div class="pq">The formulas were already strong; the revisions made the numbers honest about their uncertainty and pushed every residual error toward caution. The next gate is real-data testing, not more derivation.<cite>Metric Status Review — Post-Revision, 2026</cite></div>
   </div>
 </section>
 <section class="panel" id="case">
