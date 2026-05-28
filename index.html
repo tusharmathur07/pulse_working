@@ -237,6 +237,45 @@ th.col-pulse{color:var(--green)}
 .fixcol.fixed li::before{content:"\2713";position:absolute;left:0;color:var(--green);font-weight:600}
 .fixcol.todo li::before{content:"\203A";position:absolute;left:0;color:var(--gold);font-weight:700}
 .disc{font-size:12.5px;line-height:1.55;color:var(--ink-soft);margin:0 0 12px;padding-left:14px;border-left:2px solid var(--border-strong)}
+/* --- Math Validator tab --- */
+.vbanner{background:#0f1115;border-radius:14px;padding:30px 32px;margin:18px 0;color:#e7e9ee;font-family:var(--mono)}
+.vbanner .vb-title{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#7d8694;margin-bottom:18px}
+.vbig{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+@media(max-width:680px){.vbig{grid-template-columns:repeat(2,1fr)}}
+.vbig .vn{font-family:var(--serif);font-size:40px;font-weight:600;color:#fff;line-height:1}
+.vbig .vl{font-size:11px;color:#9aa3b1;margin-top:8px;line-height:1.4;font-family:var(--sans)}
+.vbig .vn em{color:var(--green);font-style:normal}
+.passrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:12.5px}
+.passrow:last-child{border-bottom:none}
+.passbadge{flex:none;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:0.04em;color:var(--green);background:var(--green-soft);padding:2px 7px;border-radius:4px}
+.passbadge.verify{color:var(--gold);background:var(--gold-soft)}
+.passbadge.crit{color:var(--red);background:var(--red-soft)}
+.passrow .pcode{color:var(--ink-faint);flex:none;min-width:74px}
+.passrow .pwhat{color:var(--ink-soft)}
+.passrow .pval{margin-left:auto;color:var(--ink);font-weight:500;white-space:nowrap}
+.commit{position:relative;padding:0 0 22px 28px;border-left:2px solid var(--border-strong);margin-left:6px}
+.commit:last-child{border-left-color:transparent}
+.commit::before{content:"";position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--accent,var(--red));border:2px solid var(--bg)}
+.commit .csha{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.commit .cmsg{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--ink);margin:3px 0 2px}
+.commit .cmeta2{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:8px}
+.commit .cbody{font-size:13.5px;line-height:1.6;color:var(--ink-soft)}
+.fixtag{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--red);background:var(--red-soft);padding:2px 7px;border-radius:4px;margin-right:8px;letter-spacing:0.03em;white-space:nowrap}
+.fixtag.ok{color:var(--green);background:var(--green-soft)}
+.fixitem{display:flex;gap:0;flex-direction:column;padding:13px 0;border-bottom:1px solid var(--border)}
+.fixitem:last-child{border-bottom:none}
+.fixitem .fhead{display:flex;align-items:center;gap:2px;flex-wrap:wrap;margin-bottom:6px}
+.fixitem .ftitle{font-weight:600;color:var(--ink);font-size:14px}
+.fixitem .fbody{font-size:13px;line-height:1.6;color:var(--ink-soft)}
+.beforeafter{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:8px 0;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-family:var(--mono);font-size:12px}
+.beforeafter>div{padding:10px 13px}
+.ba-before{background:var(--red-soft);color:var(--ink)}
+.ba-after{background:var(--green-soft);color:var(--ink);border-left:1px solid var(--border)}
+.beforeafter .bal{display:block;font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;opacity:0.7}
+.tree{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--ink-soft);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 20px;overflow-x:auto;white-space:pre}
+.tree .tk{color:var(--red);font-weight:600}
+.tree .tg{color:var(--green);font-weight:600}
+.tree .ty{color:var(--gold);font-weight:600}
 </style>
 </head>
 <body>
@@ -245,7 +284,7 @@ th.col-pulse{color:var(--green)}
     <div class="kicker">Pre-Build Product Research &amp; Specification</div>
     <h1>Pulse<span class="dot">.</span></h1>
     <p class="subtitle">A complete body of work — problem definition through database schema, metric derivations, a fully worked numerical case study, and competitive map — written before a single line of production code.</p>
-    <div class="byline"><span><strong>Tushar Mathur</strong> &middot; UBC Economics, Statistics </span><span>&middot;</span><span>2026</span></div>
+    <div class="byline"><span><strong>Tushar Mathur</strong> &middot; UBC Economics, Statistics. </span><span>&middot;</span><span>2026</span></div>
     <div class="scope">9 documents &middot; months of research and customer discovery &middot; ~200 pages of specification — from problem definition to a 14-table PostgreSQL schema, a six-phase pipeline, 15 derived metric formulas, and a four-client worked example with verified arithmetic — written before a single line of production code.</div>
     <div class="pills"><span class="pill">Vancouver, BC</span><span class="pill">Canadian fintech</span><span class="pill">Pre-code phase</span></div>
   </div>
@@ -259,8 +298,9 @@ th.col-pulse{color:var(--green)}
     <button class="tab-btn" data-tab="dataflow"><span class="num">04</span>Data Flow</button>
     <button class="tab-btn" data-tab="math"><span class="num">05</span>Metric Math</button>
     <button class="tab-btn" data-tab="case"><span class="num">06</span>Backend Case Study</button>
-    <button class="tab-btn" data-tab="integration"><span class="num">07</span>Integration Reference</button>
-    <button class="tab-btn" data-tab="competitive"><span class="num">08</span>Competitive Landscape</button>
+    <button class="tab-btn" data-tab="validator"><span class="num">07</span>Math Validator</button>
+    <button class="tab-btn" data-tab="integration"><span class="num">08</span>Integration Reference</button>
+    <button class="tab-btn" data-tab="competitive"><span class="num">09</span>Competitive Landscape</button>
   </div>
 </nav>
 <main class="wrap">
@@ -1486,11 +1526,692 @@ trigger: weeks &lt; 8 AND gap &gt; $500 &rarr; 4.4 &lt; 8 AND $1,680 &gt; $500 &
     </table></div>
     <div class="pq">The math works. Every formula produces a specific, traceable, verifiable number. The LLM touches one step. The math touches everything.<cite>Pulse Internal, 2026</cite></div>
   </div>
+
+  <div class="section">
+    <div class="kicker">Working Model &middot; The Pipeline End-to-End</div>
+    <h3 class="section-title">The same machine, <em>traced phase by phase</em></h3>
+    <p class="lead">A second worked example, organised differently from the four clients above. Where those traced individual metrics to their alerts, this follows three companies straight down the six-phase pipeline — ingestion, categorisation, the 90-day model, signal detection, the alert to Claude, and owner Q&amp;A — showing the actual numbers at every step. Every dollar figure is computed, not asserted.</p>
+    <div class="callout">
+      <span class="ck">The architectural rule, restated</span>
+      Deterministic Python does all math; Claude only turns finished numbers into sentences. Claude never sees raw transaction data and never calculates. Each case below follows one signal from raw data to delivered alert — and each exercises a piece of the revised math: Maria's 4-sigma data-verify rule, Sarah's biweekly-to-monthly normalization and limited-history gate, and David's large-outflow scan.
+    </div>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="phase"><div class="pn">1</div><div><strong>Ingest</strong><br><span style="font-size:13px;color:var(--ink-soft)">Pull raw data from every integration into source-of-truth tables. Read-only, nightly at 02:00.</span></div></div>
+      <div class="phase"><div class="pn">2</div><div><strong>Categorise &amp; clean</strong><br><span style="font-size:13px;color:var(--ink-soft)">Tag each transaction: category, confidence, fixed/recurring flags. Rules → Plaid ML → Claude fallback.</span></div></div>
+      <div class="phase"><div class="pn">3</div><div><strong>Build 90-day model</strong><br><span style="font-size:13px;color:var(--ink-soft)">Day-by-day forecast: balance, inflows, outflows, seasonal revenue, GST, runway. Pure arithmetic.</span></div></div>
+      <div class="phase"><div class="pn">4</div><div><strong>Detect signals</strong><br><span style="font-size:13px;color:var(--ink-soft)">Scan with z-scores and thresholds; severity-score each; priority weights rank. Top 2 advance.</span></div></div>
+      <div class="phase"><div class="pn">5</div><div><strong>Alert JSON → Claude</strong><br><span style="font-size:13px;color:var(--ink-soft)">JSON of pre-computed numbers only. Claude writes ≤90 words; every $ figure validated within $50 or regenerated.</span></div></div>
+      <div class="phase"><div class="pn">6</div><div><strong>Q&amp;A</strong><br><span style="font-size:13px;color:var(--ink-soft)">Owner asks in natural language; Claude parses intent, Python computes, Claude phrases.</span></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="casecard c-red">
+      <div class="cname">Working Case 1 &middot; Maria &mdash; Mariposa Cocina</div>
+      <div class="cdesc">Full-service restaurant &middot; Vancouver &middot; signal followed: projected payroll-day cash gap (M-01) with a food-cost spike (M-05) second</div>
+      <div class="cstack"><span class="chip">Plaid</span><span class="chip">QuickBooks</span><span class="chip">ADP Run</span><span class="chip">Toast POS</span></div>
+    </div>
+    <h4 class="section-sub">Phase 1 — Ingest</h4>
+    <p>Plaid returns a chequing balance of $24,300.00 (savings $18,000 held separately, not treated as operating buffer) plus 90 days of transactions. QuickBooks returns 12 weeks of revenue/COGS, three open catering invoices, and three open bills: Gordon Food Service $14,200 due in 3 days, 4th Ave rent $9,800 due in 5 days, BC Hydro $1,680 due in 12 days. ADP Run returns the last payroll (gross $18,400, net $13,920, 11 employees) and the next pay date in 14 days, biweekly. Toast returns last-7-day net sales $36,300, weekly labour $14,200, and food cost 38.4% against a 12-week average of 30.3%.</p>
+    <h4 class="section-sub">Phase 2 — Categorise &amp; clean</h4>
+    <p>"ADP RUN PAYROLL" → payroll, confidence 1.0, fixed + recurring. "4TH AVE COMMERCIAL RENT" → rent, 1.0, fixed + recurring (~30-day cadence). "GORDON FOOD SERVICE" → food_cost, 1.0, variable — the $14,200 bulk bill flagged is_recurring = false for its irregular size. "TOAST DEPOSIT" → revenue, 1.0. A handful of ambiguous small debits go to the Claude fallback and return "supplies"/"other".</p>
+    <h4 class="section-sub">Phase 3 — Build the 90-day model</h4>
+    <div class="formula">payroll_cash_out = net_pay + employer_taxes
+employer_taxes = gross &times; (CPP 5.95% + EI 1.66%)
+  CPP = 18,400 &times; 0.0595 = $1,094.80
+  EI  = 18,400 &times; 0.0166 = $305.44
+employer_taxes = 1,094.80 + 305.44 = $1,400.24
+payroll_cash_out = 13,920.00 + 1,400.24 = $15,320.24   (confidence 1.0)
+
+cash-gap floor = max($3,000, 50% of avg weekly fixed costs) = $3,000</div>
+    <div class="tbl-wrap"><table><thead><tr><th>Day</th><th>Inflow</th><th>Outflow</th><th>Balance</th><th>Event</th></tr></thead><tbody>
+      <tr><td>+1</td><td>574</td><td>200</td><td class="mono-cell">24,674.00</td><td>&mdash;</td></tr>
+      <tr><td>+2</td><td>5,474</td><td>200</td><td class="mono-cell">29,948.00</td><td>catering INV-2041 $4,900 paid</td></tr>
+      <tr><td>+3</td><td>574</td><td>14,400</td><td class="mono-cell">16,122.00</td><td>Gordon Food bill $14,200</td></tr>
+      <tr><td>+5</td><td>574</td><td>10,000</td><td class="mono-cell">7,070.00</td><td>rent $9,800</td></tr>
+      <tr><td>+6</td><td>3,774</td><td>200</td><td class="mono-cell">10,644.00</td><td>catering INV-2038 $3,200 paid</td></tr>
+      <tr><td>+12</td><td>574</td><td>1,880</td><td class="mono-cell">11,208.00</td><td>BC Hydro $1,680</td></tr>
+      <tr><td>+14</td><td>574</td><td>15,520.24</td><td class="mono-cell">&minus;3,364.24</td><td>PAYROLL $15,320.24</td></tr>
+    </tbody></table></div>
+    <p>On day +14 the balance falls to &minus;$3,364.24, below the $3,000 floor. gap_amount = 3,000 &minus; (&minus;3,364.24) = <strong>$6,364.24 short</strong>.</p>
+    <h4 class="section-sub">Phase 4 — Detect signals</h4>
+    <div class="formula">Signal A (M-01 cash gap): day +14 breaches the floor. Survival metric, priority weight 100.
+
+Signal B (M-05 food cost): z = (current &minus; mean) / max(stdev, sigma_floor)
+  11-week mean = 30.34%, stdev = 0.74%, current = 38.4%
+  z = (38.4 &minus; 30.34) / max(0.74, 0.5) = 8.06 / 0.74 = 10.9
+REVISED RULE: z &gt; 4 normally routes to "verify data" first — but a matching bulk
+supplier invoice exists, so this is a believable cost event and alerts.
+$ impact = (38.4% &minus; 30.3%) &times; $36,300 = ~$2,927/week of margin erosion.</div>
+    <p>Ranking: cash gap (priority 100) is signal 1; food cost (priority 60) is signal 2. Both progress to Phase 5.</p>
+    <h4 class="section-sub">Phase 5 — Alert JSON, Claude, validate, send</h4>
+    <div class="code"><span class="c">// pre-computed numbers only — Claude calculates nothing</span>
+{
+  <span class="s">"alert_type"</span>: <span class="s">"cash_gap"</span>, <span class="s">"owner_first_name"</span>: <span class="s">"Maria"</span>,
+  <span class="s">"gap_date"</span>: <span class="s">"2026-06-08"</span>, <span class="s">"days_until_gap"</span>: <span class="n">14</span>,
+  <span class="s">"gap_amount"</span>: <span class="n">6364</span>, <span class="s">"current_balance"</span>: <span class="n">24300</span>,
+  <span class="s">"gap_cause"</span>: <span class="s">"payroll"</span>, <span class="s">"payroll_amount"</span>: <span class="n">15320</span>,
+  <span class="s">"confidence"</span>: <span class="n">0.92</span>,
+  <span class="s">"resolution_options"</span>: [
+    { <span class="s">"action"</span>:<span class="s">"collect_invoice"</span>, <span class="s">"client"</span>:<span class="s">"TechCorp Offsite"</span>, <span class="s">"amount"</span>:<span class="n">3200</span> },
+    { <span class="s">"action"</span>:<span class="s">"delay_bill"</span>, <span class="s">"vendor"</span>:<span class="s">"Gordon Food Service"</span>, <span class="s">"amount"</span>:<span class="n">14200</span> },
+    { <span class="s">"action"</span>:<span class="s">"transfer_savings"</span>, <span class="s">"available"</span>:<span class="n">18000</span> } ]
+}</div>
+    <div class="alert-sms"><span class="from">SMS &middot; Twilio &middot; 8:02am</span>Hi Maria — a cash shortfall of about $6,400 is projected for your June 8 payroll, in 14 days. Your $15,320 payroll lands while the balance is low. Options: collect the $3,200 TechCorp catering invoice, delay the $14,200 Gordon Food bill a few days, or move some of your $18,000 savings across. For information only — not financial advice.</div>
+    <p style="font-size:13px"><strong>Validation:</strong> regex extracts every $ figure from Claude's text (6,400 / 15,320 / 18,000) and compares to the JSON. All within $50 of an input value → <strong>PASS</strong>. Sent via SMS + email.</p>
+    <h4 class="section-sub">Phase 6 — Q&amp;A</h4>
+    <p>Maria replies, "What if TechCorp pays me today?" Claude parses intent → <span class="mono-cell">{scenario_model, add_inflow, amount: 3200, day: 0}</span>. Python reruns the loop with +$3,200 on day 0: the day +14 balance becomes &minus;$164.24 — still short, but only by ~$3,164 against the floor. Claude phrases it: collecting TechCorp helps but does not fully cover payroll; pairing it with delaying the Gordon Food bill or a savings transfer closes the gap. Math done in Python; Claude only writes the sentence.</p>
+  </div>
+
+  <div class="section">
+    <div class="casecard c-blue">
+      <div class="cname">Working Case 2 &middot; Sarah &mdash; Northpoint Studio</div>
+      <div class="cdesc">Creative agency on retainers &middot; Vancouver &middot; signals followed: per-client payment delay (M-08) and runway (M-13) — the biweekly-to-monthly normalization test</div>
+      <div class="cstack"><span class="chip">Plaid</span><span class="chip">QuickBooks</span><span class="chip">QB Payroll</span><span class="chip">Stripe</span></div>
+    </div>
+    <h4 class="section-sub">Phase 1 — Ingest</h4>
+    <p>Plaid: chequing balance $94,200.00, plus 90 days of Stripe payouts and software debits. QuickBooks: open AR of $52,500 across three clients; 90-day revenue $355,500; paid-invoice history per client. QB Payroll: last run gross $20,200, net $14,100, biweekly, next run in 10 days. Stripe: MRR $47,500, churn 2.1%, two upcoming payouts ($15,400 in 2 days, $12,100 in 9 days), refund rate 0.4%.</p>
+    <h4 class="section-sub">Phase 2 — Categorise &amp; clean</h4>
+    <p>"QB PAYROLL" → payroll, 1.0, fixed + recurring — the PaySchedule = biweekly field is preserved, which is critical for Phase 3. "STRIPE PAYOUT" → revenue, 1.0, also carrying ArrivalDate for confidence-0.99 inflows. "WEWORK" → rent; "ADOBE"/"FIGMA"/"AWS" → software, fixed + recurring. Each client's paid invoices are aggregated into a per-client payment model (average delay and standard deviation).</p>
+    <h4 class="section-sub">Phase 3 — Build the 90-day model</h4>
+    <div class="formula">Per-client payment model (from paid history):
+  Coastal Retail: paid in {3, 2} days → avg_delay = 2.5, stdev = 0.5
+  Harbor Tech: ~41 days;  Summit Media: ~12 days
+
+Runway (Founder Mode) — the normalization step:
+employer_taxes = 20,200 &times; (0.0595 + 0.0166) = $1,537.22
+payroll_cash_out (biweekly) = 14,100 + 1,537.22 = $15,637.22
+NORMALIZE biweekly → monthly: &times; 26/12 = &times; 2.1667
+monthly_payroll = 15,637.22 &times; 26/12 = $33,880.64
+gross_burn = 33,880.64 + rent 6,200 + software 3,500 = $43,580.64
+net_burn = 43,580.64 &minus; MRR 47,500 = &minus;$3,919.36   (negative = cash-flow positive)
+Runway = n/a: revenue exceeds burn, so there is no finite runway limit.</div>
+    <div class="callout">
+      <span class="ck">Why the normalization matters — the bug it prevents</span>
+      If the biweekly $15,637.22 had been treated as a monthly figure, gross_burn would read $25,337.22 and the tool would imply a long, comfortable runway from a burn number that is simply wrong. Normalizing every payroll feed to monthly at ingestion (×26/12 biweekly, ×52/12 weekly, ×2 semimonthly) is the exact fix that stops a founder quoting an inflated runway to an investor.
+    </div>
+    <h4 class="section-sub">Phase 4 — Detect signals</h4>
+    <div class="formula">Signal A (M-08 per-client delay): Coastal Retail INV-501 is 31 days overdue vs a 2.5-day norm.
+client_z = (days_overdue &minus; client_avg_delay) / max(client_stdev, 1)
+client_z = (31 &minus; 2.5) / max(0.5, 1) = 28.5 / 1 = 28.5
+REVISED GATE: alert needs z &gt; 2.5 AND ≥ 10 days past the norm AND ≥ 6 paid invoices.
+Coastal has only 3 paid invoices → below the 6-invoice activation.
+Status: LIMITED HISTORY → surface as a soft flag, not a hard statistical alert.
+
+Signal B (M-13 runway): net_burn is negative → a positive note ("cash-flow positive
+this month"), exercising the "no runway limit" branch.</div>
+    <h4 class="section-sub">Phase 5 — Alert JSON, Claude, validate, send</h4>
+    <div class="code">{
+  <span class="s">"alert_type"</span>: <span class="s">"client_payment_delay"</span>, <span class="s">"owner_first_name"</span>: <span class="s">"Sarah"</span>,
+  <span class="s">"client"</span>: <span class="s">"Coastal Retail"</span>, <span class="s">"invoice_id"</span>: <span class="s">"INV-501"</span>,
+  <span class="s">"amount"</span>: <span class="n">18000</span>, <span class="s">"days_overdue"</span>: <span class="n">31</span>,
+  <span class="s">"client_normal_days"</span>: <span class="n">3</span>, <span class="s">"confidence"</span>: <span class="n">0.70</span>,
+  <span class="s">"status"</span>: <span class="s">"limited_history"</span>,
+  <span class="s">"note_for_llm"</span>: <span class="s">"reliable client, unusually late, low sample"</span>
+}</div>
+    <div class="alert-sms"><span class="from">SMS &middot; Twilio &middot; 8:00am</span>Hi Sarah — Coastal Retail, who usually pays in about 3 days, is now 31 days late on an $18,000 invoice. It may be nothing, but it's worth a friendly check-in. (Noted gently — this is based on a short payment history.) For information only — not financial advice.</div>
+    <p style="font-size:13px"><strong>Validation:</strong> $18,000 in the text matches the JSON within $50 → <strong>PASS</strong>. The tone is deliberately softer because status = limited_history.</p>
+    <h4 class="section-sub">Phase 6 — Q&amp;A</h4>
+    <p>Sarah asks, "If Coastal pays the $18k, how does my month look?" Intent → <span class="mono-cell">{scenario_model, add_inflow, amount: 18000}</span>. Python: the balance is already healthy and net burn is negative, so the month was already covered — Coastal simply restores buffer. Claude phrases the reassurance. No math in Claude.</p>
+  </div>
+
+  <div class="section">
+    <div class="casecard c-green">
+      <div class="cname">Working Case 3 &middot; David &mdash; Cedar &amp; Pine Goods</div>
+      <div class="cdesc">E-commerce home goods &middot; Portland, USA &middot; signals followed: refund-rate anomaly, margin/break-even (M-04/M-14), and US sales-tax handling in place of Canadian GST</div>
+      <div class="cstack"><span class="chip">Plaid</span><span class="chip">Xero</span><span class="chip">Stripe</span><span class="chip">Shopify</span></div>
+    </div>
+    <h4 class="section-sub">Phase 1 — Ingest</h4>
+    <p>Plaid: chequing balance $71,500.00, daily Stripe payouts, three large inventory POs of $48,000 in history. Xero: monthly revenue $214,000, COGS $118,000, gross profit $96,000; one open supplier bill $48,000 due in 8 days, Meta Ads $7,400 due in 4 days. Stripe: charges $228,000/30d, refunds $21,600/30d, 7-day rolling refund rate 9.4%. Shopify: GMV $241,500/30d, 1,932 orders, average order value $125, SKU-level COGS, inventory valued at $182,000 (7,140 units).</p>
+    <h4 class="section-sub">Phase 2 — Categorise &amp; clean</h4>
+    <p>"STRIPE PAYOUT" → revenue, 1.0. "META ADS"/"GOOGLE ADS" → advertising, variable (not fixed). "SUPPLIER WIRE" / "INVENTORY PO" → inventory purchase, variable, is_recurring = false (irregular large outflow). "SHIPSTATION"/"KLAVIYO" → software, fixed + recurring. Shopify product COGS mapped per SKU; refunds aggregated for the anomaly check.</p>
+    <h4 class="section-sub">Phase 3 — Build the 90-day model</h4>
+    <div class="formula">M-04 gross margin = gross_profit / revenue = 96,000 / 214,000 = 44.9%
+
+Blended margin cross-check from Shopify SKUs (sanity vs accounting):
+  revenue = sum(price &times; units) = $60,015 (sampled SKUs)
+  COGS    = sum(cogs &times; units)  = $18,001
+  blended = (60,015 &minus; 18,001) / 60,015 = 70.0%
+  (product margin before ads/fulfilment; the 44.9% is after all COGS)
+
+Break-even (M-14) = fixed_costs / (1 &minus; variable_cost_ratio)
+  fixed monthly (software + base ops) ~ $18,500
+  variable_cost_ratio ~ 0.46 (product COGS + variable ad spend)
+  break_even = 18,500 / (1 &minus; 0.46) = 18,500 / 0.54 = ~$34,259/month
+
+Sales tax (replaces GST): US company → no GST/HST. M-03 routes to the US
+state sales-tax-by-nexus branch (or N/A where no nexus), not the Canadian 5% path.</div>
+    <h4 class="section-sub">Phase 4 — Detect signals</h4>
+    <div class="formula">Signal A (refund-rate anomaly): e-commerce threshold = 7-day refund rate &gt; 8%.
+  refund_rate_7d = 9.4% &gt; 8% → ALERT
+  cross-check 30-day: 21,600 / 228,000 = 9.5%, consistent → a real elevation, not a blip
+  $ impact: ~$12,300/month of excess refunds vs a healthy ~4% to investigate
+
+Signal B (large unmodelled outflow): the $48,000 supplier PO due in 8 days is
+irregular (is_recurring = false). The revised M-01 large-outflow scan surfaces it
+explicitly so the forecast does not silently omit it.</div>
+    <h4 class="section-sub">Phase 5 — Alert JSON, Claude, validate, send</h4>
+    <div class="code">{
+  <span class="s">"alert_type"</span>: <span class="s">"refund_spike"</span>, <span class="s">"owner_first_name"</span>: <span class="s">"David"</span>,
+  <span class="s">"refund_rate_7d"</span>: <span class="n">0.094</span>, <span class="s">"normal_rate"</span>: <span class="n">0.04</span>,
+  <span class="s">"refunds_30d"</span>: <span class="n">21600</span>, <span class="s">"excess_estimate"</span>: <span class="n">12300</span>,
+  <span class="s">"charges_30d"</span>: <span class="n">228000</span>, <span class="s">"confidence"</span>: <span class="n">0.88</span>
+}</div>
+    <div class="alert-sms"><span class="from">SMS &middot; Twilio &middot; 8:01am</span>Hi David — refunds are running at 9.4% versus your normal ~4%, about $12,300/month of excess. Worth checking recent SKUs and shipping. Separately: your $48,000 supplier payment is due in 8 days against a $71,500 balance — covered, but tight until the next payouts land. For information only — not financial advice.</div>
+    <p style="font-size:13px"><strong>Validation:</strong> 21,600 / 12,300 / 48,000 all match the JSON within $50 → <strong>PASS</strong>.</p>
+    <h4 class="section-sub">Phase 6 — Q&amp;A</h4>
+    <p>David asks, "Can I cover the $48k supplier bill and still be safe this week?" Intent → <span class="mono-cell">{scenario_model, test_outflow, amount: 48000, day: 8}</span>. Python: balance $71,500 minus $48,000 = $23,500, plus two Stripe payouts ($18,900 + $16,700) arriving first → stays comfortably positive. Claude phrases: yes, the upcoming payouts cover it with buffer to spare.</p>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Recap</div>
+    <h3 class="section-title">The same machine, <em>three times</em></h3>
+    <p class="lead">Across all three, the pattern is identical: integrations feed raw data (Phase 1); Python tags and cleans it (Phase 2); Python builds an exact day-by-day model and computes every metric (Phase 3); z-scores and thresholds pick the signals that matter (Phase 4); a JSON of finished numbers goes to Claude, which only writes sentences and is checked against those numbers (Phase 5); and the owner can ask follow-ups that Python answers and Claude phrases (Phase 6).</p>
+    <p>The revised math shows up in three concrete places here: Maria's food-cost z of 10.9 is checked against the "verify data above 4-sigma" rule before alerting; Sarah's biweekly payroll is normalized ×26/12 to $33,881/month before any runway statement, and her late client is held at "limited history" rather than hard-alerted on a 3-invoice sample; and David's $48,000 PO is surfaced by the large-outflow scan instead of being silently dropped.</p>
+    <div class="pq">Every dollar figure an owner ever sees has been computed in Python and validated to within $50 of the model before Claude is allowed to send it. No alert is better than a wrong alert.<cite>Pulse Working Model, 2026</cite></div>
+  </div>
+</section>
+
+<section class="panel" id="validator">
+  <div class="doc-head">
+    <div class="kicker">Document 07 · The Proof Layer</div>
+    <h2>Math Validator</h2>
+    <p class="purpose">The single most important artefact in the project so far. <code>pulse_math_validator.py</code> is the canonical proof that the backend math is correct — pure Python, no ML, no external API calls, fully offline. It is the source of truth for every formula, every threshold, and every alert rule <em>before any of it touches production code</em>. This is where the specification stops being a document and becomes a runnable, verifiable artefact.</p>
+    <p class="covers"><strong>Covers:</strong> Phase 1 ingestion (raw API → normalized rows) · the validator build history · 11 arithmetic fixes · 4 worked clients · 121 passing assertions · Monte Carlo, alert-budget &amp; verify-data layers · vertical config · thin-history &amp; dirty-data guards · the complete alert decision tree</p>
+    <span class="filename">pulse_math_validator.py</span>
+  </div>
+
+  <div class="vbanner">
+    <div class="vb-title">Final state · python3 pulse_math_validator.py</div>
+    <div class="vbig">
+      <div><div class="vn">2,987</div><div class="vl">lines of pure Python<br>no ML · no API calls · runs offline</div></div>
+      <div><div class="vn">121</div><div class="vl">assertions across 11 test functions<br><em>all passing</em></div></div>
+      <div><div class="vn">15</div><div class="vl">metrics validated end-to-end<br>against 4 real worked clients</div></div>
+      <div><div class="vn"><em>✓</em></div><div class="vl">ALL ASSERTIONS PASSED<br>every $ figure verified to ±$50</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Why this matters most</div>
+    <h3 class="section-title">The number is never the LLM's <em>to invent</em></h3>
+    <p class="lead">Pulse's core architectural promise is that deterministic Python does all the math and the language model only turns finished numbers into sentences. The validator is what makes that promise auditable. Every formula a business owner's alert depends on is computed here, step by step, with the arithmetic printed and asserted against an independently-derived expected value. If the math is wrong, the validator fails loudly — long before a wrong number could ever reach a phone.</p>
+    <div class="callout">
+      <span class="ck">What the validator guarantees</span>
+      Each metric is a function that prints its arithmetic line by line and then asserts the result against the expected value from the case documents. A failing assertion halts the run. This means the entire financial engine is regression-tested on every execution: a future change that breaks Maria's payroll-coverage ratio cannot pass silently.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Phase 1 · Ingestion</div>
+    <h3 class="section-title">From raw API JSON <em>to the rows the validator reads</em></h3>
+    <p class="lead">Before the math runs, real integration data has to land in a known shape. This is the faithful structural replication of how Maria's data actually arrives — the exact field names, sign conventions, cents-vs-dollars quirks, token handling and pending-transaction rules of the real APIs — then normalized into the PostgreSQL rows the validator consumes. The chain is: <strong>raw API JSON → normalize → database rows → <code>pulse_math_validator.py</code> → alerts.</strong></p>
+
+    <div class="subtabs">
+      <button class="subtab active" data-sub="ing-raw">Raw API responses</button>
+      <button class="subtab" data-sub="ing-norm">Normalized DB rows</button>
+      <button class="subtab" data-sub="ing-feed">What feeds each metric</button>
+    </div>
+
+    <div class="subpanel active" id="ing-raw">
+      <p>Maria's Kitchen connects five providers. Each returns its own JSON shape; Pulse makes one or more read-only calls per provider and never writes back. A few representative payloads, exactly as each API returns them:</p>
+      <h4 class="section-sub">Plaid — bank balance (<code>POST /accounts/balance/get</code>)</h4>
+      <div class="code"><span class="c">// required for every customer · CAD</span>
+{
+  <span class="s">"accounts"</span>: [{
+    <span class="s">"balances"</span>: {
+      <span class="s">"available"</span>: <span class="n">23150.00</span>,
+      <span class="s">"current"</span>:   <span class="n">24300.00</span>,   <span class="c">// → Day 0 opening balance</span>
+      <span class="s">"iso_currency_code"</span>: <span class="s">"CAD"</span>
+    },
+    <span class="s">"name"</span>: <span class="s">"Business Chequing"</span>,
+    <span class="s">"official_name"</span>: <span class="s">"TD Business Chequing Account"</span>,
+    <span class="s">"subtype"</span>: <span class="s">"checking"</span>
+  }],
+  <span class="s">"item"</span>: { <span class="s">"institution_name"</span>: <span class="s">"TD Canada Trust"</span> }
+}</div>
+      <div class="callout">
+        <span class="ck">The sign-convention trap</span>
+        Plaid uses <strong>positive = money leaving</strong> (debit) and <strong>negative = money entering</strong> (credit) — the opposite of intuition. The $4,900 Square deposit arrives from Plaid as <code>-4900.00</code>. This is inverted during normalization, and getting it wrong would flip every inflow and outflow in the forecast.
+      </div>
+      <h4 class="section-sub">ADP Run — payroll output &amp; next schedule</h4>
+      <div class="code">{
+  <span class="s">"payDate"</span>: <span class="s">"2026-02-28"</span>, <span class="s">"payFrequency"</span>: <span class="s">"biweekly"</span>,
+  <span class="s">"payrollSummary"</span>: {
+    <span class="s">"grossPay"</span>:      { <span class="s">"amount"</span>: <span class="n">18400.00</span> },
+    <span class="s">"netPayTotal"</span>:   { <span class="s">"amount"</span>: <span class="n">13920.00</span> },
+    <span class="s">"employerTaxes"</span>: { <span class="s">"amount"</span>: <span class="n">1400.24</span> }
+  },
+  <span class="s">"employerTaxBreakdown"</span>: {
+    <span class="s">"cpp"</span>: { <span class="s">"amount"</span>: <span class="n">1094.80</span>, <span class="s">"rate"</span>: <span class="n">0.0595</span> },
+    <span class="s">"ei"</span>:  { <span class="s">"amount"</span>: <span class="n">305.44</span>,  <span class="s">"rate"</span>: <span class="n">0.0166</span> }
+  }
+}
+<span class="c">// next pay: 2026-03-15 = Day 16 — the day the cash-gap model checks</span></div>
+      <h4 class="section-sub">Toast — restaurant POS (food data Plaid cannot see)</h4>
+      <div class="code">{
+  <span class="s">"salesSummary"</span>: { <span class="s">"netSales"</span>: { <span class="s">"amount"</span>: <span class="n">26800.00</span> }, <span class="s">"covers"</span>: <span class="n">1240</span> },
+  <span class="s">"costOfGoods"</span>: { <span class="s">"foodCost"</span>: { <span class="s">"amount"</span>: <span class="n">10299.00</span> }, <span class="s">"foodCostPct"</span>: <span class="n">38.43</span> }
+}
+<span class="c">// foodCostPct 38.43 → the exact value M-05 flags as VERIFY DATA (z=16.27)</span></div>
+      <p style="font-size:13px">QuickBooks (invoices, bills, P&amp;L) and Square (payments, reported in <em>cents</em> — <code>490000</code> = $4,900.00) round out the five. Square's deposit is the same $4,900 Plaid sees hit the bank — reconciled during normalization so it is counted once.</p>
+    </div>
+
+    <div class="subpanel" id="ing-norm">
+      <p>After Phase 1 (ingest) and Phase 2 (categorise), the raw JSON above becomes typed PostgreSQL rows on the exact schema from the Technical Spec. The sign convention is corrected (here: negative = outflow, positive = inflow) and every transaction is tagged with a category, a confidence score, and its source layer.</p>
+      <h4 class="section-sub"><code>transactions</code> — categorised, sign-corrected</h4>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>merchant</th><th>amount</th><th>category</th><th>conf.</th><th>source</th><th>pending</th></tr></thead>
+        <tbody>
+          <tr><td>ADP PAYROLL</td><td class="mono-cell">&minus;15,320.24</td><td>payroll</td><td class="mono-cell">1.000</td><td><span class="prio p0">rules</span></td><td>false</td></tr>
+          <tr><td>METRO PRODUCE SUPPLY</td><td class="mono-cell">&minus;14,200.00</td><td>food_cost</td><td class="mono-cell">1.000</td><td><span class="prio p0">rules</span></td><td>false</td></tr>
+          <tr><td>SQUARE INC</td><td class="mono-cell">+4,900.00</td><td>revenue</td><td class="mono-cell">1.000</td><td><span class="prio p0">rules</span></td><td>false</td></tr>
+          <tr><td>BC Hydro</td><td class="mono-cell">&minus;420.00</td><td>utilities</td><td class="mono-cell">0.940</td><td><span class="prio p1">plaid_ml</span></td><td>false</td></tr>
+          <tr><td>SYSCO CANADA</td><td class="mono-cell">&minus;89.00</td><td>food_cost</td><td class="mono-cell">0.860</td><td><span class="prio p2">claude</span></td><td>false</td></tr>
+          <tr><td>RICExPRESS WHOLESALE</td><td class="mono-cell">&minus;312.50</td><td>food_cost</td><td class="mono-cell">1.000</td><td><span class="prio p0">rules</span></td><td><strong>true</strong></td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px">All three categorisation layers appear here: the rules engine (~40% of volume), Plaid ML (~30%), and the Claude fallback (~30%). The pending RICExPRESS row is <strong>excluded</strong> from forecasts until it posts — exactly per the Plaid spec rule.</p>
+      <h4 class="section-sub"><code>payroll_runs</code> — history + projected next run</h4>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>check_date</th><th>gross</th><th>net</th><th>employer_tax</th><th>cash_out</th><th>projected?</th></tr></thead>
+        <tbody>
+          <tr><td>2026-02-28</td><td class="mono-cell">18,400.00</td><td class="mono-cell">13,920.00</td><td class="mono-cell">1,400.24</td><td class="mono-cell">15,320.24</td><td>false</td></tr>
+          <tr><td>2026-03-15</td><td class="mono-cell">18,400.00</td><td class="mono-cell">13,920.00</td><td class="mono-cell">1,400.24</td><td class="mono-cell">15,320.24</td><td><strong>true</strong></td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px">The projected Mar-15 <code>cash_out = 15,320.24</code> is exactly the "extra outflow" the validator's M-01 loop applies on Day 16. <code>cash_out</code> is auto-generated as <code>net_pay + employer_taxes</code>.</p>
+      <h4 class="section-sub"><code>client_payment_profiles</code> — drives M-08</h4>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>customer</th><th>invoices</th><th>avg delay</th><th>stdev</th><th>p90</th></tr></thead>
+        <tbody>
+          <tr><td>Miller &amp; Sons Catering</td><td class="mono-cell">7</td><td class="mono-cell">14.20 d</td><td class="mono-cell">4.80</td><td class="mono-cell">21 d</td></tr>
+          <tr><td>Westside Events Co</td><td class="mono-cell">3</td><td class="mono-cell">2.00 d</td><td class="mono-cell">1.50</td><td class="mono-cell">4 d</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px">Built by aggregating each customer's paid-invoice history. Miller &amp; Sons pays ~14 days late on average; with INV-312 already 3 days overdue, the model projects the $9,800 inflow landing around Day 11–17.</p>
+    </div>
+
+    <div class="subpanel" id="ing-feed">
+      <p>The complete picture — which normalized rows feed each metric, and the result for Maria:</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Metric</th><th>Reads from</th><th class="col-pulse">Maria's result</th></tr></thead>
+        <tbody>
+          <tr><td>M-01 Cash Gap</td><td>daily_balances + payroll_runs + invoices + transactions</td><td class="col-pulse">Gap on Day 16, balance &minus;$736.24</td></tr>
+          <tr><td>M-02 Payroll Coverage</td><td>payroll_runs + daily_balances</td><td class="col-pulse">0.95 — CRITICAL</td></tr>
+          <tr><td>M-03 GST Reserve</td><td>invoices + P&amp;L + businesses.gst_rate</td><td class="col-pulse">computed from taxable revenue</td></tr>
+          <tr><td>M-05 Food Cost %</td><td>daily_revenue (Toast)</td><td class="col-pulse">38.43% → VERIFY DATA</td></tr>
+          <tr><td>M-07 DSO</td><td>invoices + P&amp;L</td><td class="col-pulse">from receivables</td></tr>
+          <tr><td>M-08 Per-Client Delay</td><td>invoices + client_payment_profiles</td><td class="col-pulse">Miller &amp; Sons watched</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout">
+        <span class="ck">The honest caveat</span>
+        This is a faithful <em>structural</em> replication — field names, types, sign conventions, token handling, cents-vs-dollars, pending rules, and the categorisation layers all behave exactly as the real APIs do. The <em>values</em> are constructed to match Maria's case numbers so they flow cleanly into the validator. Real Plaid sandbox data has 1,847 messy transactions, not six clean ones — but the shape is identical. When the real integration is wired up, the normalization code produces rows in exactly this form.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Build History</div>
+    <h3 class="section-title">How the validator <em>came to be trusted</em></h3>
+    <p class="lead">The validator was not written once and declared correct. It was built in versioned steps, each one closing a specific gap found by auditing the math against real cases. The commit history is itself part of the proof — it shows exactly what was wrong, when it was caught, and how it was fixed.</p>
+    <div style="margin-top:20px">
+      <div class="commit">
+        <div class="csha">3e7cf78 · May 20, 2026 </div>
+        <div class="cmsg">math validator complete — all 47 assertions passing</div>
+        <div class="cmeta2">1,327 lines · the first working version</div>
+        <div class="cbody">All 15 metrics implemented and validated against the four case-study clients. Every metric prints its arithmetic step by step and asserts the result against the expected value from the case docs. This version also applied the 11 arithmetic fixes (below) discovered after the original case analysis was written — which is why the file header reads "v2".</div>
+      </div>
+      <div class="commit">
+        <div class="csha">518ba80 · May 22, 2026 </div>
+        <div class="cmsg">probabilistic M-01, alert budget, cross-cutting verify-data</div>
+        <div class="cmeta2">+496 lines</div>
+        <div class="cbody">Three structural layers added on top of the deterministic core: a Monte Carlo wrapper around the cash-gap model, a portfolio alert-budget ranking layer, and a shared "extreme reading = verify data" router. Prompted by the post-build status review.</div>
+      </div>
+      <div class="commit">
+        <div class="csha">d3e7c23 · May 23, 2026</div>
+        <div class="cmsg">M-04 M-06 M-07 routed through vertical config</div>
+        <div class="cmeta2">+395 lines</div>
+        <div class="cbody">Introduced <code>VERTICAL_CONFIG</code> — the same metric now alerts at different thresholds depending on business type. A restaurant DSO of 50 days is a crisis; a contractor DSO of 50 days is completely normal.</div>
+      </div>
+      <div class="commit">
+        <div class="csha">55899d7 · May 26, 2026</div>
+        <div class="cmsg">cross-vertical routing proven — same number, different alert</div>
+        <div class="cmeta2">+121 lines</div>
+        <div class="cbody">Wiring the config is not the same as proving it changes behaviour. <code>test_vertical_routing()</code> demonstrates that identical arithmetic produces different alert outcomes by business type — the key safety guarantee against alerting a contractor for normal contractor behaviour.</div>
+      </div>
+      <div class="commit">
+        <div class="csha">c590176 · May 26, 2026</div>
+        <div class="cmsg">thin-history paths degrade gracefully, no false alerts</div>
+        <div class="cmeta2">+129 lines</div>
+        <div class="cbody">Guards in four metrics so a brand-new account with two weeks of data is told "not enough data yet" rather than fired a statistical alert on a history too short to support the statistics.</div>
+      </div>
+      <div class="commit">
+        <div class="csha">88309e5 · May 26, 2026</div>
+        <div class="cmsg">dirty-data guards intercept before alert paths</div>
+        <div class="cmeta2">+190 lines</div>
+        <div class="cbody">Structurally impossible data (COGS = $0, COGS &gt; revenue, revenue ≤ 0) is caught and flagged as a data-quality problem instead of producing a spurious "healthy margin" or negative-margin alert.</div>
+      </div>
+      <div class="commit">
+        <div class="csha">6107d8b · May 27, 2026 (today)</div>
+        <div class="cmsg">three audit gaps closed — M-05 vertical, M-09 vendor-type, M-15 none guard</div>
+        <div class="cmeta2">+374 lines · current head</div>
+        <div class="cbody">A formal audit of the status review identified three concretely fixable gaps: M-05 wired through the food-cost sub-verticals, M-09 routed by vendor type, and M-15 guarded against upstream <code>None</code> inputs so the composite score degrades partially instead of crashing.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">The 11 Arithmetic Fixes</div>
+    <h3 class="section-title">The corrections that <em>make it "v2"</em></h3>
+    <p class="lead">The original specification had compounding errors. These eleven fixes — discovered after the case analysis was written — are encoded and tested in the validator. The first is the single most dangerous bug in the entire product.</p>
+    <div style="margin-top:8px">
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M13</span><span class="ftitle">Biweekly payroll normalisation — CRITICAL</span></div>
+        <div class="fbody">The case analysis treated a biweekly payroll run as if it were monthly. The correct figure is run × 26/12. This made the original runway roughly 2× too optimistic — a founder pitching investors with the wrong number.
+          <div class="beforeafter"><div class="ba-before"><span class="bal">Sarah · wrong</span>net_burn $11,600/mo → runway 8.12 months</div><div class="ba-after"><span class="bal">Sarah · corrected</span>net_burn $28,166.67 → runway 3.34 months</div></div>
+        </div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-Z0</span><span class="ftitle">t-threshold &amp; s_floor on z-scores</span></div>
+        <div class="fbody">The original spec used a flat z ≥ 2.0 cutoff. For n=12 the correct one-sided t-statistic at df=11 is 2.255. And near-flat histories (a vendor charging the same amount weekly) produce stdev ≈ 0, generating enormous meaningless z-scores — so each metric gets a per-metric minimum standard deviation (s_floor).</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M05</span><span class="ftitle">Food cost z-score floor</span></div>
+        <div class="fbody">s_floor = 0.50 pp. Maria's food-cost history had stdev 0.4522, floored to 0.50 — changing her z from 18.00 to 16.28. Still extreme, but calculated correctly.</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M03</span><span class="ftitle">GST ITC eligibility per expense category</span></div>
+        <div class="fbody">CRA rules: wages → 0% recoverable, meals/entertainment → 50%, standard inputs → 100%. The original assumed 100% on everything. Amir's case was all software (100%) so his numbers didn't change — but any client with wages in the ITC list was wrong before.</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M07</span><span class="ftitle">DSO ceiling = payment_terms + 15-day buffer</span></div>
+        <div class="fbody">The absolute ceiling is not flat — it depends on the business's actual terms. A contractor on net-60 with DSO=65 is fine; a restaurant at DSO=20 is not.</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M08</span><span class="ftitle">Client delay practical floor</span></div>
+        <div class="fbody">The per-client z-score needed a second gate: the absolute gap (days_overdue − avg) must be ≥ 10 days AND the business must have ≥ 6 paid invoices before the alert fires. Otherwise a client who is always 1 day late triggers alerts the moment they hit 3 days.</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M09</span><span class="ftitle">Bonferroni correction on vendor anomaly</span></div>
+        <div class="fbody">Testing 20 vendors at once pushes the chance of at least one false alarm far above 5%. The fix encodes per-count z cutoffs (7 vendors → 2.45, 20 → 2.81, 40 → 3.02).</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M06</span><span class="ftitle">Labor %: compound signal requires 2 consecutive weeks</span></div>
+        <div class="fbody">The compound signal (high labor % AND falling revenue) is an early warning, not a crisis alert — it escalates only after two consecutive qualifying weeks.</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M04</span><span class="ftitle">Margin z s_floor = 1.0 pp</span></div>
+        <div class="fbody">Same principle as M-05, applied to gross-margin history.</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M14</span><span class="ftitle">Variable-cost ratio includes hourly labour</span></div>
+        <div class="fbody">Break-even: variable_cost_ratio = variable_COGS_ratio + variable_labour_ratio. The original only counted COGS.</div>
+      </div>
+      <div class="fixitem">
+        <div class="fhead"><span class="fixtag">FIX-M15</span><span class="ftitle">Expansion score as band, not false decimal</span></div>
+        <div class="fbody">"72.34/100" implies precision the inputs don't have. The fix maps to a band: Expansion ready (80–100), Nearly ready (60–79), Needs work (40–59), Stabilise first (&lt;40).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">The Four Clients · Live Assertions</div>
+    <h3 class="section-title">Every formula, <em>checked against a real case</em></h3>
+    <p class="lead">The original 47 assertions are distributed across four test functions, one per client — each a different business type stressing a different cluster of metrics. This is the actual validator output: computed value vs. expected value, to a stated tolerance.</p>
+
+    <div class="subtabs">
+      <button class="subtab active" data-sub="cl-maria">Maria · restaurant</button>
+      <button class="subtab" data-sub="cl-james">James · contractor</button>
+      <button class="subtab" data-sub="cl-sarah">Sarah · agency</button>
+      <button class="subtab" data-sub="cl-amir">Amir · founder</button>
+    </div>
+
+    <div class="subpanel active" id="cl-maria">
+      <p><strong>Maria's Kitchen</strong> — restaurant, 14 staff, $1.2M revenue, Vancouver. Tests the cash gap on payroll day, payroll coverage, and the food-cost z-score. <span style="color:var(--gold)">⚠ z=16.27 &gt; 4.0 routes to VERIFY DATA</span> — not a crisis alert, but a likely double-count or mapping error.</p>
+      <div style="margin-top:12px">
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-01</span><span class="pwhat">gap on day 16</span><span class="pval">16.00 = 16.00</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-01</span><span class="pwhat">balance[16]</span><span class="pval">&minus;$736.24</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-01</span><span class="pwhat">gap_amount (threshold − balance)</span><span class="pval">$3,736.24</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-01</span><span class="pwhat">cash_threshold ($3,000 floor wins)</span><span class="pval">$3,000.00</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-01</span><span class="pwhat">balance[15] (day before payroll)</span><span class="pval">$14,610.00</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-02</span><span class="pwhat">employer_taxes (CPP+EI)</span><span class="pval">$1,400.24</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-02</span><span class="pwhat">payroll_cash_out</span><span class="pval">$15,320.24</span></div>
+        <div class="passrow"><span class="passbadge crit">CRIT</span><span class="pcode">M-02</span><span class="pwhat">coverage_ratio &lt; 1.0 — cannot make payroll</span><span class="pval">0.9536</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-05</span><span class="pwhat">food_cost_pct</span><span class="pval">38.43%</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-05</span><span class="pwhat">12wk mean / raw stdev</span><span class="pval">30.29% / 0.4521</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-05</span><span class="pwhat">sigma_eff = max(0.4522, 0.5)</span><span class="pval">0.5000</span></div>
+        <div class="passrow"><span class="passbadge verify">VERIFY</span><span class="pcode">M-05</span><span class="pwhat">z_food (s_floor applied)</span><span class="pval">16.27</span></div>
+      </div>
+      <div class="formula">cash_threshold = max($3,000, 50% &times; avg_weekly_fixed $4,200) = $3,000.00
+balance[16] = &minus;$736.24   →   gap = $3,000 &minus; (&minus;$736.24) = $3,736.24
+employer_taxes = 18,400 &times; (0.0595 + 0.0166) = $1,400.24
+payroll_cash_out = 13,920 + 1,400.24 = $15,320.24
+coverage = balance_before $14,610 / $15,320.24 = 0.9536   ← CRITICAL
+z_food = (38.43 &minus; 30.29) / 0.50 = 16.27   ← &gt; 4.0 → VERIFY DATA</div>
+      <p style="font-size:13px"><strong>Deviation note:</strong> original spec z = 18.00; with the s_floor fix, z = 16.28. Because z &gt; 4, this routes to data-verification, not a crisis alert.</p>
+    </div>
+
+    <div class="subpanel" id="cl-james">
+      <p><strong>Fraser Valley Contracting</strong> — contractor, 8 staff, $2.8M revenue, Burnaby. Tests receivables DSO, per-client payment delay, and project float. <span style="color:var(--gold)">⚠ DSO |z|=11.18 → VERIFY DATA</span>; the per-client alert fires because both the statistical and practical gates are met.</p>
+      <div style="margin-top:12px">
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-07</span><span class="pwhat">avg_daily_sales</span><span class="pval">$2,750.00/d</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-07</span><span class="pwhat">DSO</span><span class="pval">31.636 d</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-07</span><span class="pwhat">12wk DSO mean / stdev</span><span class="pval">23.59 / 0.72</span></div>
+        <div class="passrow"><span class="passbadge verify">VERIFY</span><span class="pcode">M-07</span><span class="pwhat">z_DSO (extreme → verify data)</span><span class="pval">11.18</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-08</span><span class="pwhat">client_avg_delay</span><span class="pval">3.20 d</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-08</span><span class="pwhat">client_stdev</span><span class="pval">1.0328</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-08</span><span class="pwhat">client_z</span><span class="pval">26.92</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-08</span><span class="pwhat">practical floor met (27.8 ≥ 10)</span><span class="pval">ALERT: YES</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-12</span><span class="pwhat">min_float_balance</span><span class="pval">&minus;$71,600</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-12</span><span class="pwhat">recommended_draw</span><span class="pval">$86,600</span></div>
+      </div>
+      <div class="formula">DSO = AR $87,000 / (revenue_90d $247,500 / 90) = 31.636 days
+client_z = (31 &minus; 3.20) / max(1.0328, 1) = 26.92
+abs_gap = 31 &minus; 3.20 = 27.8 d ≥ 10   AND   z &gt; 2.5   → ALERT
+M-12: baseline $68,400 &minus; upfront $140,000 = &minus;$71,600
+recommended_draw = max(0, $15,000 &minus; (&minus;$71,600)) = $86,600</div>
+    </div>
+
+    <div class="subpanel" id="cl-sarah">
+      <p><strong>Northvane Studio</strong> — agency/founder, 6 staff, Vancouver. Tests the labor-cost compound signal and the runway calculation — this is the client that exercises the critical biweekly-to-monthly normalization (FIX-M13).</p>
+      <div style="margin-top:12px">
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-06</span><span class="pwhat">labor_pct</span><span class="pval">37.37%</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-06</span><span class="pwhat">12wk labor mean / stdev</span><span class="pval">36.16% / 0.6331</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-06</span><span class="pwhat">z_labor</span><span class="pval">1.91</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-06</span><span class="pwhat">z_revenue</span><span class="pval">&minus;2.78</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-06</span><span class="pwhat">compound signal this week</span><span class="pval">YES</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-13</span><span class="pwhat">monthly_payroll (14,200 × 26/12)</span><span class="pval">$30,766.67</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-13</span><span class="pwhat">gross_burn (corrected)</span><span class="pval">$37,966.67</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-13</span><span class="pwhat">net_burn (corrected)</span><span class="pval">$28,166.67</span></div>
+        <div class="passrow"><span class="passbadge crit">CRIT</span><span class="pcode">M-13</span><span class="pwhat">runway CORRECTED — &lt; 6 months</span><span class="pval">3.34 mo</span></div>
+      </div>
+      <div class="beforeafter"><div class="ba-before"><span class="bal">Case analysis (biweekly as monthly)</span>net_burn $11,600 · runway 8.12 months</div><div class="ba-after"><span class="bal">Corrected (× 26/12 = 2.1667)</span>net_burn $28,166.67 · runway 3.34 months</div></div>
+      <p style="font-size:13px"><strong>This is the ~2.4× overstatement</strong> the validator exists to prevent — the difference between a founder believing they have eight months of runway and the reality of three.</p>
+    </div>
+
+    <div class="subpanel" id="cl-amir">
+      <p><strong>Kova AI</strong> — pre-seed founder, 2 staff, $4,200 MRR, Vancouver. Tests the GST reserve gap, runway, and the expansion-readiness composite score (reported as a band, not a false decimal).</p>
+      <div style="margin-top:12px">
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-03</span><span class="pwhat">est_gst_gross ($42,000 × 5%)</span><span class="pval">$2,100.00</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-03</span><span class="pwhat">est_ITCs (software @ 1.0)</span><span class="pval">$420.00</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-03</span><span class="pwhat">gst_reserve_gap</span><span class="pval">$1,680.00</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-03</span><span class="pwhat">weekly_reserve ($1,680 / 4.4)</span><span class="pval">$381.82/wk</span></div>
+        <div class="passrow"><span class="passbadge crit">CRIT</span><span class="pcode">M-13</span><span class="pwhat">runway CORRECTED — &lt; 6 months</span><span class="pval">4.22 mo</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-15</span><span class="pwhat">dso_score (no AR → 100)</span><span class="pval">100.0</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-15</span><span class="pwhat">margin_score</span><span class="pval">92.0</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-15</span><span class="pwhat">coverage_score (ratio ≫ 1.5)</span><span class="pval">100.0</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-15</span><span class="pwhat">runway_score (corrected)</span><span class="pval">8.14</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-15</span><span class="pwhat">gst_score (fully unreserved → 0)</span><span class="pval">0.0</span></div>
+        <div class="passrow"><span class="passbadge">PASS</span><span class="pcode">M-15</span><span class="pwhat">data_quality (manual)</span><span class="pval">80.0</span></div>
+      </div>
+      <div class="formula">M-15 weighted: dso 20.00 + margin 18.40 + coverage 20.00
+            + runway 1.63 + gst 0.00 + data_quality 8.00  =  68.03
+band: "Nearly ready (60–79)"   ← not reported as 68.03/100</div>
+      <div class="beforeafter"><div class="ba-before"><span class="bal">Case analysis</span>runway 7.78 mo → runway_score 31.9 · total 72.77</div><div class="ba-after"><span class="bal">Corrected</span>runway 4.22 mo → runway_score 8.1 · total 68.03</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Three Structural Layers</div>
+    <h3 class="section-title">Beyond the deterministic core</h3>
+    <p class="lead">On top of the exact arithmetic, three layers make the engine production-honest: it answers the question owners actually ask, it refuses to drown them in alerts, and it knows the difference between a crisis and a data glitch.</p>
+
+    <div class="grid g3" style="margin-top:18px">
+      <div class="promise">
+        <div class="pi">01</div>
+        <h4>Probabilistic M-01 (Monte Carlo)</h4>
+        <p>The deterministic loop returns a single day and amount. Owners actually ask "what's the probability I hit a cash gap?" So <code>m01_cash_gap_mc()</code> wraps the daily loop in 1,000 runs, perturbing revenue (±15%) and costs (±10%) while leaving known scheduled items fixed. It returns P(breach) plus P10/P50/P90 on the gap day and amount.</p>
+      </div>
+      <div class="promise">
+        <div class="pi">02</div>
+        <h4>Alert budget / portfolio ranking</h4>
+        <p>Running 15 metrics on a real portfolio creates alert fatigue. <code>rank_and_cap_alerts()</code> applies a Bonferroni-corrected cutoff that tightens as more tests run, sorts by severity, and returns only the top few. VERIFY_DATA signals bypass the cutoff — data problems always surface.</p>
+      </div>
+      <div class="promise">
+        <div class="pi">03</div>
+        <h4>Extreme-reading router</h4>
+        <p>Maria's food-cost z of 16.28 is not "a food-cost crisis" — it is statistically near-impossible, so the only realistic cause is a data problem. <code>_route_z_signal()</code> sends |z| &gt; 4.0 to VERIFY_DATA, z &gt; t-threshold to ALERT, else OK. The fix is never "alert louder" — it's "flag for review."</p>
+      </div>
+    </div>
+
+    <div class="vbanner" style="margin-top:22px">
+      <div class="vb-title">Change 1 · M-01 Monte Carlo — Maria, 1,000 runs · seed 42</div>
+      <div class="vbig" style="grid-template-columns:repeat(3,1fr)">
+        <div><div class="vn">100%</div><div class="vl">P(breach in 90d) — 1,000 / 1,000 runs. The payroll-day deficit is too structural to be rescued by revenue noise.</div></div>
+        <div><div class="vn">Day 16</div><div class="vl">gap day P10–P90 (median Day 16) — tight because the payroll date is known, not simulated.</div></div>
+        <div><div class="vn">$3,727</div><div class="vl">median gap · P10–P90 $2,678–$4,862. Deterministic gap $3,736 sits inside the band.</div></div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="ck">The unmodelled-outflow scan</span>
+      A companion routine scans transaction history for large debits from merchants appearing fewer than three times — irregular outflows the recurring forecast silently ignores. For Maria it flagged two: <strong>PACIFIC INSURANCE GROUP ($3,200, annual)</strong> and <strong>KITCHENTECH REPAIRS ($1,800, quarterly)</strong>. These will occur but were invisible to the 90-day model — exactly the kind of gap that turns a "safe" forecast into a surprise overdraft.
+    </div>
+
+    <h4 class="section-sub">Change 2 — the alert budget in action (9 signals submitted, cap = 4)</h4>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Metric</th><th>Severity</th><th>Route</th><th>Message</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>M-08 client delay</td><td class="mono-cell">26.920</td><td><span class="prio p0">ALERT</span></td><td>Coastal 31d overdue — abs_gap 27.8d</td></tr>
+        <tr><td>2</td><td>M-05 food cost</td><td class="mono-cell">16.270</td><td><span class="prio p1">VERIFY_DATA</span></td><td>food cost z=16.27 — verify invoices</td></tr>
+        <tr><td>3</td><td>M-07 DSO</td><td class="mono-cell">11.180</td><td><span class="prio p1">VERIFY_DATA</span></td><td>DSO z=11.18 — check AR snapshot</td></tr>
+        <tr><td>4</td><td>M-09 vendor A</td><td class="mono-cell">10.850</td><td><span class="prio p1">VERIFY_DATA</span></td><td>vendor A z=10.85 — check POS remap</td></tr>
+      </tbody>
+    </table></div>
+    <p style="font-size:13px">Portfolio z-cutoff = 2.807 (Bonferroni for 9 tests, 5% family-wise). 4 signals suppressed below the cutoff; 1 above the cutoff trimmed by the cap. M-10 (z=2.78) and M-06 (z=1.91) correctly fell below the cutoff and were suppressed — the test asserts exactly this.</p>
+  </div>
+
+  <div class="section">
+    <div class="kicker">VERTICAL_CONFIG</div>
+    <h3 class="section-title">Same number, <em>different business, different alert</em></h3>
+    <p class="lead">The key safety guarantee: identical arithmetic must produce different outcomes by business type. A restaurant DSO of 50 days is a crisis; a contractor's is normal. <code>test_vertical_routing()</code> proves it with paired calls where the only variable is <code>business_type</code>.</p>
+    <div class="grid g3" style="margin-top:6px">
+      <div class="card"><div class="role-lbl" style="color:var(--red)">VR-01 · DSO = 50 days</div><h4>M-07</h4><p><strong>restaurant</strong> → ceiling 14d → <span style="color:var(--red)">breach fires</span><br><strong>contractor</strong> → ceiling 70d → silent</p></div>
+      <div class="card"><div class="role-lbl" style="color:var(--gold)">VR-02 · labor = 42%</div><h4>M-06</h4><p><strong>restaurant</strong> → ceiling 38% → <span style="color:var(--red)">breach fires</span><br><strong>agency</strong> → z-score only → silent (labor IS the product)</p></div>
+      <div class="card"><div class="role-lbl" style="color:var(--blue)">VR-03 · margin = 58%</div><h4>M-04</h4><p><strong>restaurant</strong> → floor 55% → silent<br><strong>saas</strong> → floor 65% → <span style="color:var(--red)">breach fires</span></p></div>
+    </div>
+    <h4 class="section-sub">Benchmarks by vertical (from the metrics spec)</h4>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Vertical</th><th>M-04 margin floor</th><th>M-05 food ceiling</th><th>M-06 labor</th><th>M-07 DSO ceiling</th></tr></thead>
+      <tbody>
+        <tr><td>restaurant</td><td>55%</td><td>38%</td><td>38%</td><td>14 d</td></tr>
+        <tr><td>quick_service</td><td>—</td><td>33%</td><td>35%</td><td>—</td></tr>
+        <tr><td>contractor</td><td>30%</td><td>—</td><td>z-score only</td><td>70 d</td></tr>
+        <tr><td>agency</td><td>60%</td><td>—</td><td>z-score only</td><td>45 d</td></tr>
+        <tr><td>ecommerce</td><td>35%</td><td>—</td><td>—</td><td>21 d</td></tr>
+        <tr><td>saas</td><td>65%</td><td>—</td><td>—</td><td>45 d</td></tr>
+        <tr><td>retail</td><td>—</td><td>—</td><td>25%</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="section-sub">M-05 food-cost sub-verticals (Gap 1 — added today)</h4>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Sub-vertical</th><th>Healthy range</th><th>Abs ceiling</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td>fine_dining</td><td>30–38%</td><td>42%</td><td>Premium ingredients justify higher cost</td></tr>
+        <tr><td>cafe</td><td>25–35%</td><td>30%</td><td>Beverages drive margin; food &gt;30% = problem</td></tr>
+        <tr><td>bar</td><td>18–26%</td><td>30%</td><td>Alcohol margin dominates; food &gt;30% = warning</td></tr>
+      </tbody>
+    </table></div>
+    <h4 class="section-sub">M-09 vendor-type routing (Gap 2 — added today)</h4>
+    <div class="grid g4" style="margin-top:6px">
+      <div class="card"><div class="role-lbl">new_vendor</div><p style="font-size:13px">No z-score. First appearance → "new vendor" notification for owner review, not a financial alert.</p></div>
+      <div class="card"><div class="role-lbl">saas_subscription</div><p style="font-size:13px">Expected flat. Any change &gt; $1.00 → ALERT. A $50 jump on a fixed contract is suspicious by definition.</p></div>
+      <div class="card"><div class="role-lbl">produce</div><p style="font-size:13px">Genuinely volatile. Only a spike &gt; 20% above mean alerts; 5–15% weekly swings are normal.</p></div>
+      <div class="card"><div class="role-lbl">utility</div><p style="font-size:13px">No alert regardless of magnitude. ±10% seasonal variation is documented as expected.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Graceful Degradation</div>
+    <h3 class="section-title">Thin history and dirty data <em>never become false alerts</em></h3>
+    <p class="lead">Two distinct failure modes, two distinct guards. Thin history means insufficient data; dirty data means structurally impossible data. In both cases the metric returns a labelled non-result rather than a misleading alert — and M-15 down-weights the missing component instead of crashing.</p>
+    <div class="grid g2">
+      <div class="card">
+        <div class="role-lbl" style="color:var(--gold)">Thin history → INSUFFICIENT_HISTORY</div>
+        <h4>Not enough data yet</h4>
+        <p style="font-size:13.5px">M-07 needs ≥ 5 invoices; M-08 needs ≥ 6; M-10 needs ≥ 12 weeks; M-15 flags &lt; 3 months as PARTIAL. The raw metric value is still returned for display — only the statistical alert is suppressed. Thin history is not bad news, so it must not look like a crisis.</p>
+      </div>
+      <div class="card">
+        <div class="role-lbl" style="color:var(--red)">Dirty data → DATA_QUALITY_FLAG</div>
+        <h4>Structurally impossible input</h4>
+        <p style="font-size:13.5px">M-04 catches COGS=0 (implies 100% margin), COGS ≥ revenue, revenue ≤ 0, and COGS &lt; 5% (categorisation incomplete). M-05 and M-06 carry the same guards. A <code>_no_alert()</code> helper proves the guard intercepts <em>before</em> the alert path — not merely that it returns None.</p>
+      </div>
+    </div>
+    <h4 class="section-sub">M-15 upstream-None propagation (Gap 3 — added today)</h4>
+    <p>M-15 consumes other metrics' outputs. Now that those can legitimately return <code>None</code>, passing None into the composite once raised <code>TypeError</code> — crashing exactly when the owner most needs a partial answer. The guard forces each unavailable component to score 0 (its weight stays, so the max possible score drops), prints <code>← N/A</code>, and appends a notice to the band.</p>
+    <div class="formula">runway unavailable → its 0.20 weight contributes 0
+max possible score: 100 → 80
+band: "Nearly ready (60–79) [components unavailable: runway]"
+→ a lower score and a clear explanation, never a crash or a falsely confident number</div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">The Complete Picture</div>
+    <h3 class="section-title">The alert decision tree, <em>as it stands</em></h3>
+    <p class="lead">Every input that arrives runs this gauntlet. Data-quality and history guards come first; only clean, sufficient data reaches the metric computation; vertical config decides the absolute thresholds; the z-score router separates crises from data problems; and the portfolio layer caps what finally reaches the owner.</p>
+    <div class="tree">Input arrives
+├── <span class="tk">Dirty-data guard</span>  (COGS=0, revenue≤0, COGS≥revenue, COGS&lt;5%)
+│     └── DATA_QUALITY_FLAG → return None → M-15 down-weights to 0
+├── <span class="ty">Thin-history guard</span>  (invoices &lt; min, weeks &lt; 12, months &lt; 3)
+│     └── INSUFFICIENT_HISTORY → return None → M-15 down-weights to 0
+├── Metric computation
+│     ├── Absolute threshold check  (from VERTICAL_CONFIG by business_type)
+│     │     └── fires by business type, not hardcoded
+│     └── Z-score check
+│           ├── |z| &gt; 4.0  →  <span class="ty">VERIFY_DATA</span>  (data problem, not a crisis)
+│           └── z &gt; t-threshold  →  <span class="tk">ALERT</span>
+└── <span class="tg">Portfolio ranking</span> (rank_and_cap_alerts)
+      ├── Bonferroni cutoff tightens as portfolio grows
+      ├── VERIFY_DATA bypasses cutoff (always surfaces)
+      └── Hard cap: max 5 signals reach the owner per run</div>
+  </div>
+
+  <div class="section">
+    <div class="kicker">Assertion Inventory</div>
+    <h3 class="section-title">121 assertions, <em>all passing</em></h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Test function</th><th>Assertions</th><th>What it covers</th></tr></thead>
+      <tbody>
+        <tr><td class="mono-cell">test_maria()</td><td>13</td><td>M-01 cash gap, M-02 payroll coverage, M-05 food cost z-score</td></tr>
+        <tr><td class="mono-cell">test_james()</td><td>8</td><td>M-07 DSO, M-08 per-client delay, M-12 project float</td></tr>
+        <tr><td class="mono-cell">test_sarah()</td><td>8</td><td>M-06 labor compound, M-13 biweekly runway correction</td></tr>
+        <tr><td class="mono-cell">test_amir()</td><td>12</td><td>M-03 GST reserve, M-13 runway, M-15 expansion components</td></tr>
+        <tr><td class="mono-cell">test_new_features()</td><td>14</td><td>Monte Carlo breach probability, alert budget ranking, VERIFY_DATA routing</td></tr>
+        <tr><td class="mono-cell">test_thin_history()</td><td>8</td><td>Insufficient history → degraded state, not false alert</td></tr>
+        <tr><td class="mono-cell">test_dirty_data()</td><td>21</td><td>Structural bad input → DATA_QUALITY_FLAG, no financial alert</td></tr>
+        <tr><td class="mono-cell">test_vertical_routing()</td><td>6</td><td>Same number, different vertical → different outcome</td></tr>
+        <tr><td class="mono-cell">test_gap1_m05_vertical()</td><td>8</td><td>fine_dining / cafe / bar sub-vertical ceilings</td></tr>
+        <tr><td class="mono-cell">test_gap2_m09_vendor_type()</td><td>7</td><td>new_vendor / saas / produce / utility routing</td></tr>
+        <tr><td class="mono-cell">test_gap3_m15_none_guard()</td><td>7</td><td>Upstream None → partial score, no crash</td></tr>
+      </tbody>
+    </table></div>
+    <div class="pq">The validator is pure Python, no ML, no external API calls — it runs fully offline and acts as the single source of truth for every formula, every threshold, and every alert rule before any of them touch production code.<cite>Pulse Math Validator, 2026</cite></div>
+  </div>
 </section>
 
 <section class="panel" id="integration">
   <div class="doc-head">
-    <div class="kicker">Reference Sheet · 07</div>
+    <div class="kicker">Reference Sheet · 08</div>
     <h2>Integration Reference</h2>
     <p class="purpose">A single-page master reference for every external service Pulse connects to — the role each plays, how authentication works, which customers depend on it, and the regulatory framework that governs the data. Compiled from the Data Flow specification as a quick-lookup companion.</p>
     <p class="covers"><strong>Covers:</strong> 11 integrations · auth model per provider · read-only guarantee · Canadian regulatory map · per-partner rationale</p>
@@ -1589,7 +2310,7 @@ trigger: weeks &lt; 8 AND gap &gt; $500 &rarr; 4.4 &lt; 8 AND $1,680 &gt; $500 &
 
 <section class="panel" id="competitive">
   <div class="doc-head">
-    <div class="kicker">Market Analysis · 08</div>
+    <div class="kicker">Market Analysis · 09</div>
     <h2>Competitive Landscape</h2>
     <p class="purpose">Every direct and indirect competitor in the Canadian SMB cash-flow intelligence space — what they do, what they cost, and the specific gap each one leaves open. The central discipline here is refusing to treat "any product that touches SMB finances" as a direct competitor. Four categories, four different jobs-to-be-done.</p>
     <p class="covers"><strong>Covers:</strong> 4 competitor categories · 10 named direct competitors · feature matrix · Canadian-specific field · 3 structural gaps · the compounding moat</p>
